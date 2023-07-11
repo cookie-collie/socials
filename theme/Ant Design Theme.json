@@ -1,0 +1,9 @@
+{
+  "token": {
+    "colorTextBase": "#44464f",
+    "fontSize": 16,
+    "borderRadius": 6,
+    "wireframe": false,
+    "colorPrimary": "#6b8fdf"
+  }
+}
