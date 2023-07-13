@@ -1,5 +1,6 @@
 import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react"
 import { NavbarItem } from "./NavbarItem"
+import { Link } from "react-router-dom"
 
 interface NavbarProps {
     onSelectItem: (e: any) => void
@@ -19,10 +20,12 @@ export const Navbar = (props: NavbarProps) => {
             shadow={"md"}
         >
             <Box px={"2"}>
-                <ButtonGroup variant={"ghost"} gap={4} color={"teal"}>
+                <ButtonGroup variant={"ghost"} gap={4} colorScheme="pink">
                     <>
                         {items.map((item) => (
                             <Button
+                                as={Link}
+                                to={"/" + item.key}
                                 key={item.key}
                                 onClick={onSelectItem}
                                 name={item.key}
