@@ -7,13 +7,7 @@ import MySocials from "../MySocials"
 import PriceSheet from "../PriceSheet"
 import TOS from "../TOS"
 
-interface MainLayoutProps {
-    children?: React.ReactNode
-}
-
-export const MainLayout = (props: MainLayoutProps) => {
-    const { children } = props
-
+export const MainLayout = () => {
     const items: NavbarItem[] = [
         { label: "About Me", key: "about-me" },
         { label: "My socials", key: "socials" },
@@ -46,7 +40,9 @@ export const MainLayout = (props: MainLayoutProps) => {
             </Box>
 
             <Center h={40} bgColor={"pink.300"}>
-                <Text color={"whiteAlpha.900"}>&copy; 2023 CookieCollie. All rights reserved</Text>
+                <Text color={"whiteAlpha.900"}>
+                    &copy; 2023 CookieCollie. All rights reserved
+                </Text>
             </Center>
         </Stack>
     )

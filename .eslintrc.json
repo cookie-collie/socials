@@ -17,6 +17,14 @@
     "plugins": ["@typescript-eslint", "react"],
     "rules": {
         "quotes": ["error", "double"],
-        "semi": ["error", "never"]
+        "semi": ["error", "never"],
+        "react/self-closing-comp": [
+            "warn",
+            {
+                "component": true,
+                "html": true
+            }
+        ],
+        "no-unused-vars": "warn"
     }
 }

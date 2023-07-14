@@ -1,6 +1,5 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { HashRouter } from "react-router-dom"
-import AboutMe from "./pages/AboutMe"
 import MainLayout from "./pages/MainLayout"
 
 function App() {
@@ -64,9 +63,7 @@ function App() {
     return (
         <HashRouter basename="/">
             <ChakraProvider>
-                <MainLayout>
-                    <AboutMe />
-                </MainLayout>
+                <MainLayout />
             </ChakraProvider>
         </HashRouter>
     )
