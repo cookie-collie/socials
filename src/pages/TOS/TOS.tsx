@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react"
 import { useState } from "react"
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+import { MdCookie } from "react-icons/md"
 
 export const TOS = () => {
     const _terms = [
@@ -154,7 +155,9 @@ export const TOS = () => {
                             {pageNum === 1 &&
                                 _terms.map((term, i) => (
                                     <ListItem key={"term-" + i}>
-                                        <ListIcon />
+                                        <ListIcon fontSize={"2xl"}>
+                                            <MdCookie />
+                                        </ListIcon>
                                         {term}
                                     </ListItem>
                                 ))}
@@ -162,7 +165,9 @@ export const TOS = () => {
                             {pageNum === 2 &&
                                 _important.map((term, i) => (
                                     <ListItem key={"term-" + i}>
-                                        <ListIcon />
+                                        <ListIcon fontSize={"2xl"}>
+                                            <MdCookie />
+                                        </ListIcon>
                                         {term}
                                     </ListItem>
                                 ))}
