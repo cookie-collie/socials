@@ -1,3 +1,9 @@
+import { Card, Stack } from "@chakra-ui/react"
+
 export const PriceSheet = () => {
-    return <p>Price sheet</p>
+    return (
+        <Stack>
+            <Card></Card>
+        </Stack>
+    )
 }
