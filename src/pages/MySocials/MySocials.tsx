@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react"
 import {
     FaDiscord,
+    FaExternalLinkAlt,
     FaTumblr,
     FaTwitch,
     FaTwitter,
@@ -19,12 +20,62 @@ import {
 import { SiKofi } from "react-icons/si"
 
 export const MySocials = () => {
+    const _buttonContent = [
+        {
+            href: "https://twitter.com/CookieCollie",
+            color: "#00acee",
+            borderColor: "#00acee",
+            leftIcon: <FaTwitter />,
+            children: "Twitter",
+        },
+
+        {
+            href: "https://www.twitch.tv/cookiecollie",
+            color: "#6441a5",
+            borderColor: "#6441a5",
+            leftIcon: <FaTwitch />,
+            children: "Twitch",
+        },
+
+        {
+            href: "https://www.youtube.com/channel/UC_d-mYXMM9ZY_XNnI7Qu-yw",
+            color: "#c4302b",
+            borderColor: "#c4302b",
+            leftIcon: <FaYoutube />,
+            children: "Youtube",
+        },
+
+        {
+            href: "https://discord.gg/YrhgDeSZDX",
+            color: "#7289DA",
+            borderColor: "#7289DA",
+            leftIcon: <FaDiscord />,
+            children: "Discord Server",
+        },
+
+        {
+            href: "https://www.tumblr.com/cookiecollie",
+            color: "#36465D",
+            borderColor: "#36465D",
+            leftIcon: <FaTumblr />,
+            children: "Tumblr",
+        },
+
+        {
+            href: "https://ko-fi.com/cookiecollie",
+            color: "#FF5E5B",
+            borderColor: "#FF5E5B",
+            leftIcon: <SiKofi />,
+            children: "Ko-fi",
+        },
+    ]
+
     return (
         <Stack>
             <Box>
                 <Card variant={"outline"}>
-                    <CardBody>
-                        <Stack gap={10} px={{base: 4, md: 16}} align={"center"}>
+                    <CardBody px={{ base: 4, md: 16 }} py={10}>
+                        <Stack gap={10} align={"center"}>
                             <Heading
                                 fontFamily={"Fredoka, Comfortaa, Arial"}
                                 size={"xl"}
@@ -34,84 +85,27 @@ export const MySocials = () => {
                             </Heading>
 
                             <ButtonGroup w={"100%"} variant={"outline"}>
-                                <SimpleGrid columns={{base: 1, md: 2, lg: 3}} gap={5} w={"100%"}>
-                                    <Button
-                                        href="https://twitter.com/CookieCollie"
-                                        as={Link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color={"#00acee"}
-                                        style={{ textDecoration: "none" }}
-                                        borderColor={"#00acee"}
-                                        leftIcon={<FaTwitter />}
-                                    >
-                                        Twitter
-                                    </Button>
-
-                                    <Button
-                                        as={Link}
-                                        href="https://www.twitch.tv/cookiecollie"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color={"#6441a5"}
-                                        style={{ textDecoration: "none" }}
-                                        borderColor={"#6441a5"}
-                                        leftIcon={<FaTwitch />}
-                                    >
-                                        Twitch
-                                    </Button>
-
-                                    <Button
-                                        as={Link}
-                                        href="https://www.youtube.com/channel/UC_d-mYXMM9ZY_XNnI7Qu-yw"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color={"#c4302b"}
-                                        style={{ textDecoration: "none" }}
-                                        borderColor={"#c4302b"}
-                                        leftIcon={<FaYoutube />}
-                                    >
-                                        Youtube
-                                    </Button>
-
-                                    <Button
-                                        as={Link}
-                                        href="https://discord.gg/YrhgDeSZDX"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color={"#7289DA"}
-                                        style={{ textDecoration: "none" }}
-                                        borderColor={"#7289DA"}
-                                        leftIcon={<FaDiscord />}
-                                    >
-                                        Discord Server
-                                    </Button>
-
-                                    <Button
-                                        as={Link}
-                                        href="https://www.tumblr.com/cookiecollie"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color={"#36465D"}
-                                        style={{ textDecoration: "none" }}
-                                        borderColor={"#36465D"}
-                                        leftIcon={<FaTumblr />}
-                                    >
-                                        Tumblr
-                                    </Button>
-
-                                    <Button
-                                        as={Link}
-                                        href="https://ko-fi.com/cookiecollie"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color={"#FF5E5B"}
-                                        style={{ textDecoration: "none" }}
-                                        borderColor={"#FF5E5B"}
-                                        leftIcon={<SiKofi />}
-                                    >
-                                        Ko-fi
-                                    </Button>
+                                <SimpleGrid
+                                    columns={{ base: 1, md: 2, lg: 3 }}
+                                    gap={5}
+                                    w={"100%"}
+                                >
+                                    {_buttonContent.map((content) => (
+                                        <Button
+                                            key={content.children}
+                                            as={Link}
+                                            href={content.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{ textDecoration: "none" }}
+                                            color={content.color}
+                                            borderColor={content.borderColor}
+                                            leftIcon={content.leftIcon}
+                                            rightIcon={<FaExternalLinkAlt />}
+                                        >
+                                            {content.children}
+                                        </Button>
+                                    ))}
                                 </SimpleGrid>
                             </ButtonGroup>
                         </Stack>
