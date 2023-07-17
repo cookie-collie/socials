@@ -14,7 +14,7 @@ import {
     useDisclosure,
 } from "@chakra-ui/react"
 import { useState } from "react"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import Navbar, { NavbarItem } from "../../components/Navbar"
 import AboutMe from "../AboutMe"
 import AboutWebsite from "../AboutWebsite"
@@ -30,10 +30,12 @@ export const MainLayout = () => {
         { label: "Terms of Service", key: "tos" },
     ]
 
+    const test = useLocation()
     const [currentItem, setCurrentItem] = useState("about-me")
     const handleOnSelectItem = (e: any) => {
-        setCurrentItem(e.target.name)
+        setCurrentItem(test.pathname.replace("/", ""))
     }
+
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
@@ -46,7 +48,9 @@ export const MainLayout = () => {
             >
                 <DrawerOverlay />
                 <DrawerContent p={2} fontFamily={"Fredoka, Comfortaa, Arial"}>
-                    <DrawerHeader>About this Website</DrawerHeader>
+                    <DrawerHeader fontSize={"2xl"}>
+                        About this Website
+                    </DrawerHeader>
                     <DrawerBody>
                         <AboutWebsite />
                     </DrawerBody>
@@ -55,6 +59,7 @@ export const MainLayout = () => {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+
             <Stack align={"stretch"} minHeight={"100%"}>
                 <Box h={"20"}>
                     <Navbar

@@ -3,7 +3,7 @@ import { NavbarItem } from "./NavbarItem"
 import { Link } from "react-router-dom"
 
 interface NavbarProps {
-    onSelectItem: (e: any) => void
+    onSelectItem?: (e: any) => void
     currentItem: string
     items: NavbarItem[]
 }

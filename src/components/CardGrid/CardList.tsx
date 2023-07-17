@@ -40,7 +40,11 @@ export const CardList = (props: {
                     <AspectRatio maxH={"200px"}>
                         <Image src={card.coverImgUrl} />
                     </AspectRatio>
-                    <LinkOverlay href={card.linkTo}>
+                    <LinkOverlay
+                        href={card.linkTo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <CardHeader>
                             <Stack gap={3}>
                                 {typeof card.heading === typeof "" ? (
