@@ -79,7 +79,7 @@ export const PriceSheet = () => {
             heading: "Emotes",
             body: _renderBodyList(_emotesDes),
             coverImgUrl: _emotesImgLinks[0],
-            linkTo: "",
+            linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32923",
             price: "$10",
         },
 
@@ -87,7 +87,7 @@ export const PriceSheet = () => {
             heading: "Half Body",
             body: _renderBodyList(_allBodyDes),
             coverImgUrl: _halfBodyImgLinks[0],
-            linkTo: "",
+            linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32921",
             price: "$25+",
             additionalInfo: <>Detailed background: +$5</>,
         },
@@ -96,7 +96,7 @@ export const PriceSheet = () => {
             heading: "Full Body",
             body: _renderBodyList(_allBodyDes),
             coverImgUrl: _fullBodyImgLinks[0],
-            linkTo: "",
+            linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32922",
             price: "$35+",
             additionalInfo: (
                 <>
@@ -111,7 +111,7 @@ export const PriceSheet = () => {
             heading: "Reference Sheet",
             body: _renderBodyList(_refSheetDes),
             coverImgUrl: _refSheetImgLinks[0],
-            linkTo: "",
+            linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32925",
             price: "$50",
         },
 
@@ -119,7 +119,7 @@ export const PriceSheet = () => {
             heading: "Plush Phone Wallpaper",
             body: _renderBodyList(_plushPhoneBGDes),
             coverImgUrl: _plushPhoneBGImgLinks[0],
-            linkTo: "",
+            linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32924",
             price: "$25",
         },
     ]
