@@ -1,6 +1,16 @@
-import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react"
-import { NavbarItem } from "./NavbarItem"
+import {
+    Box,
+    Button,
+    ButtonGroup,
+    Flex,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+} from "@chakra-ui/react"
+import { MdMenu } from "react-icons/md"
 import { Link } from "react-router-dom"
+import { NavbarItem } from "./NavbarItem"
 
 interface NavbarProps {
     onSelectItem?: (e: any) => void
@@ -32,10 +42,30 @@ export const Navbar = (props: NavbarProps) => {
                                 variant={
                                     currentItem === item.key ? "solid" : "ghost"
                                 }
+                                display={{ base: "none", sm: "-webkit-box" }}
                             >
                                 {item.label}
                             </Button>
                         ))}
+
+                        <Box display={{ base: "-webkit-box", sm: "none" }}>
+                            <Menu>
+                                <MenuButton as={Button} variant={"ghost"}>
+                                    <MdMenu />
+                                </MenuButton>
+                                <MenuList justifySelf={"center"}>
+                                    {items.map((item) => (
+                                        <MenuItem
+                                            key={item.key}
+                                            as={Link}
+                                            to={"/" + item.key}
+                                        >
+                                            {item.label}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </Menu>
+                        </Box>
                     </>
                 </ButtonGroup>
             </Box>
