@@ -17,18 +17,18 @@ import { AiOutlineInfo } from "react-icons/ai"
 import { Route, Routes, useLocation } from "react-router-dom"
 import { FAB } from "../../components/FAB"
 import { Navbar, NavbarItem } from "../../components/Navbar"
+import PriceSheet from "../../fragments/PriceSheet"
 import AboutMe from "../AboutMe"
-import AboutWebsite from "../AboutWebsite"
+import AboutWebsite from "../../fragments/AboutWebsite"
+import { Commission } from "../Commission"
 import MySocials from "../MySocials"
-import PriceSheet from "../PriceSheet"
-import TOS from "../TOS"
+import TOS from "../../fragments/TOS"
 
 export const MainLayout = () => {
     const items: NavbarItem[] = [
         { label: "About Me", key: "about-me" },
         { label: "My socials", key: "socials" },
-        { label: "Price sheet", key: "price-sheet" },
-        { label: "Terms of Service", key: "tos" },
+        { label: "Commission", key: "commission" },
     ]
 
     const _path = useLocation()
@@ -48,7 +48,7 @@ export const MainLayout = () => {
                 placement="right"
                 onClose={onClose}
                 isOpen={isOpen}
-                size={"xs"}
+                size={"sm"}
             >
                 <DrawerOverlay />
                 <DrawerContent p={2} fontFamily={"Fredoka, Comfortaa, Arial"}>
@@ -75,6 +75,7 @@ export const MainLayout = () => {
                         <Route path="/socials" element={<MySocials />} />
                         <Route path="/price-sheet" element={<PriceSheet />} />
                         <Route path="/tos" element={<TOS />} />
+                        <Route path="/commission" element={<Commission />} />
                     </Routes>
                 </Box>
 
