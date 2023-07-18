@@ -13,9 +13,9 @@ import {
     Text,
     useDisclosure,
 } from "@chakra-ui/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
-import Navbar, { NavbarItem } from "../../components/Navbar"
+import { Navbar, NavbarItem } from "../../components/Navbar"
 import AboutMe from "../AboutMe"
 import AboutWebsite from "../AboutWebsite"
 import MySocials from "../MySocials"
@@ -30,11 +30,14 @@ export const MainLayout = () => {
         { label: "Terms of Service", key: "tos" },
     ]
 
-    const test = useLocation()
-    const [currentItem, setCurrentItem] = useState("about-me")
-    const handleOnSelectItem = (e: any) => {
-        setCurrentItem(test.pathname.replace("/", ""))
-    }
+    const _path = useLocation()
+    const [currentItem, setCurrentItem] = useState(
+        _path.pathname.replace("/", "")
+    )
+
+    useEffect(() => {
+        setCurrentItem(_path.pathname.replace("/", ""))
+    }, [_path])
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -62,11 +65,7 @@ export const MainLayout = () => {
 
             <Stack align={"stretch"} minHeight={"100%"}>
                 <Box h={"20"}>
-                    <Navbar
-                        items={items}
-                        currentItem={currentItem}
-                        onSelectItem={handleOnSelectItem}
-                    />
+                    <Navbar items={items} currentItem={currentItem} />
                 </Box>
 
                 <Box px={{ base: "8", md: "8", lg: "32" }} py={12}>
