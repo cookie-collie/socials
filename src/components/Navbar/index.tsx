@@ -1,4 +1,4 @@
 import { Navbar } from "./Navbar"
 import { NavbarItem } from "./NavbarItem"
-export default Navbar
+export { Navbar }
 export type { NavbarItem }
