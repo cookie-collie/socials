@@ -8,13 +8,14 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
-    Link,
     Stack,
     Text,
     useDisclosure,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
+import { AiOutlineInfo } from "react-icons/ai"
 import { Route, Routes, useLocation } from "react-router-dom"
+import { FAB } from "../../components/FAB"
 import { Navbar, NavbarItem } from "../../components/Navbar"
 import AboutMe from "../AboutMe"
 import AboutWebsite from "../AboutWebsite"
@@ -82,10 +83,13 @@ export const MainLayout = () => {
                         <Text>
                             &copy; 2023 CookieCollie. All rights reserved
                         </Text>
-                        <Link onClick={onOpen}>About this website</Link>
                     </Stack>
                 </Center>
             </Stack>
+
+            <FAB onClick={onOpen}>
+                <AiOutlineInfo />
+            </FAB>
         </>
     )
 }
