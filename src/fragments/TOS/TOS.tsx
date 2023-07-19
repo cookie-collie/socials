@@ -1,11 +1,18 @@
 import { Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react"
+import { useEffect } from "react"
 import { MdCookie } from "react-icons/md"
 
 interface TOSProps {
     currentPage?: number
+    setMaxPage?: (page: number) => void
 }
 export const TOS = (props: TOSProps) => {
-    const { currentPage = 1 } = props
+    const { currentPage = 1, setMaxPage } = props
+
+    useEffect(() => {
+        setMaxPage?.(2)
+    }, [])
+
     const _terms = [
         <>
             Details about commissions will be available on my Ko-fi. Please read
