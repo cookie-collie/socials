@@ -1,20 +1,11 @@
-import {
-    Box,
-    Heading,
-    List,
-    ListIcon,
-    ListItem,
-    ModalBody,
-    ModalCloseButton,
-    ModalFooter,
-    ModalHeader,
-    Stack,
-} from "@chakra-ui/react"
-import { useRef, useState } from "react"
+import { Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
-import { Pagination } from "../../components/Pagination"
 
-export const TOS = () => {
+interface TOSProps {
+    currentPage?: number
+}
+export const TOS = (props: TOSProps) => {
+    const { currentPage = 1 } = props
     const _terms = [
         <>
             Details about commissions will be available on my Ko-fi. Please read
@@ -108,100 +99,59 @@ export const TOS = () => {
         </>,
     ]
 
-    const [pageNum, setPageNum] = useState(1)
-
-    const modalContentRef = useRef<HTMLDivElement>(null)
-    const _scrollToTop = () => {
-        if (modalContentRef.current) {
-            modalContentRef.current.scroll({
-                top: 0,
-                behavior: "smooth",
-            })
-        }
-    }
-
     return (
-        <>
-            <ModalCloseButton borderRadius={"full"} color={"whiteAlpha.900"}/>
+        <Stack color={"blackAlpha.700"} fontSize={"lg"} gap={8}>
+            <Heading
+                fontFamily={"Fredoka, Comfortaa, Arial"}
+                size={"md"}
+                color={"blackAlpha.800"}
+                textAlign={"center"}
+            >
+                {currentPage === 1 && (
+                    <>
+                        By commissioning me, you confirm that you have read and
+                        agree to the ToS below:
+                    </>
+                )}
 
-            <ModalHeader backgroundColor={"pink.400"} borderBottomRadius={"2xl"}>
-                <Heading
-                    fontFamily={"Fredoka, Comfortaa, Arial"}
-                    size={"xl"}
-                    color={"whiteAlpha.900"}
-                    textAlign={"center"}
-                >
-                    Terms of Service
-                </Heading>
-            </ModalHeader>
+                {currentPage === 2 && (
+                    <>
+                        READ THESE CAREFULLY IF YOU DO NOT WANT TO BE
+                        BLACKLISTED
+                    </>
+                )}
+            </Heading>
 
-            <ModalBody ref={modalContentRef} py={8}>
-                <Stack color={"blackAlpha.700"} fontSize={"lg"} gap={8}>
-                    <Heading
-                        fontFamily={"Fredoka, Comfortaa, Arial"}
-                        size={"md"}
-                        color={"blackAlpha.800"}
-                        textAlign={"center"}
-                    >
-                        {pageNum === 1 && (
-                            <>
-                                By commissioning me, you confirm that you have
-                                read and agree to the ToS below:
-                            </>
-                        )}
+            <List spacing={4}>
+                {currentPage === 1 &&
+                    _terms.map((term, i) => (
+                        <ListItem key={"term-" + i}>
+                            <ListIcon fontSize={"xl"}>
+                                <MdCookie />
+                            </ListIcon>
+                            {term}
+                        </ListItem>
+                    ))}
 
-                        {pageNum === 2 && (
-                            <>
-                                READ THESE CAREFULLY IF YOU DO NOT WANT TO BE
-                                BLACKLISTED
-                            </>
-                        )}
-                    </Heading>
+                {currentPage === 2 &&
+                    _important.map((term, i) => (
+                        <ListItem key={"term-" + i}>
+                            <ListIcon fontSize={"xl"}>
+                                <MdCookie />
+                            </ListIcon>
+                            {term}
+                        </ListItem>
+                    ))}
+            </List>
 
-                    <List spacing={4}>
-                        {pageNum === 1 &&
-                            _terms.map((term, i) => (
-                                <ListItem key={"term-" + i}>
-                                    <ListIcon fontSize={"2xl"}>
-                                        <MdCookie />
-                                    </ListIcon>
-                                    {term}
-                                </ListItem>
-                            ))}
-
-                        {pageNum === 2 &&
-                            _important.map((term, i) => (
-                                <ListItem key={"term-" + i}>
-                                    <ListIcon fontSize={"2xl"}>
-                                        <MdCookie />
-                                    </ListIcon>
-                                    {term}
-                                </ListItem>
-                            ))}
-                    </List>
-
-                    <Heading
-                        fontFamily={"Fredoka, Comfortaa, Arial"}
-                        size={"md"}
-                        color={"blackAlpha.800"}
-                    >
-                        This ToS is subjected to changes. Please read it
-                        carefully every time you commission me.
-                    </Heading>
-                </Stack>
-            </ModalBody>
-
-            <ModalFooter justifyContent={"center"}>
-                <Box>
-                    <Pagination
-                        maxPage={2}
-                        currentPage={pageNum}
-                        setPageCallback={setPageNum}
-                        onNext={_scrollToTop}
-                        onPrevious={_scrollToTop}
-                    />
-                </Box>
-            </ModalFooter>
-        </>
+            <Heading
+                fontFamily={"Fredoka, Comfortaa, Arial"}
+                size={"md"}
+                color={"blackAlpha.800"}
+            >
+                This ToS is subjected to changes. Please read it carefully every
+                time you commission me.
+            </Heading>
+        </Stack>
     )
 }
