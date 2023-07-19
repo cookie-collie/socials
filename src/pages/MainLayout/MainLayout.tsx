@@ -8,6 +8,7 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
+    SlideFade,
     Stack,
     Text,
     useDisclosure,
@@ -17,18 +18,20 @@ import { AiOutlineInfo } from "react-icons/ai"
 import { Route, Routes, useLocation } from "react-router-dom"
 import { FAB } from "../../components/FAB"
 import { Navbar, NavbarItem } from "../../components/Navbar"
-import PriceSheet from "../../fragments/PriceSheet"
-import AboutMe from "../AboutMe"
 import AboutWebsite from "../../fragments/AboutWebsite"
-import { Commission } from "../Commission"
-import MySocials from "../MySocials"
+import PriceSheet from "../../fragments/PriceSheet"
 import TOS from "../../fragments/TOS"
+import AboutMe from "../AboutMe"
+import { Commission } from "../Commission"
+import { CommissionForm } from "../CommissionForm"
+import MySocials from "../MySocials"
 
 export const MainLayout = () => {
     const items: NavbarItem[] = [
         { label: "About Me", key: "about-me" },
         { label: "My socials", key: "socials" },
         { label: "Commission", key: "commission" },
+        { label: "Commission Form", key: "comm-form" },
     ]
 
     const _path = useLocation()
@@ -40,14 +43,19 @@ export const MainLayout = () => {
         setCurrentItem(_path.pathname.replace("/", ""))
     }, [_path])
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const _drawerDisclosure = useDisclosure()
+    const _slideTransDisclosure = useDisclosure()
+
+    useEffect(() => {
+        _slideTransDisclosure.onToggle()
+    }, [])
 
     return (
         <>
             <Drawer
                 placement="right"
-                onClose={onClose}
-                isOpen={isOpen}
+                onClose={_drawerDisclosure.onClose}
+                isOpen={_drawerDisclosure.isOpen}
                 size={"sm"}
             >
                 <DrawerOverlay />
@@ -59,15 +67,28 @@ export const MainLayout = () => {
                         <AboutWebsite />
                     </DrawerBody>
                     <DrawerFooter>
-                        <Button onClick={onClose}>Close</Button>
+                        <Button onClick={_drawerDisclosure.onClose}>
+                            Close
+                        </Button>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
 
             <Stack align={"stretch"} minHeight={"100%"}>
-                <Box h={"20"}>
-                    <Navbar items={items} currentItem={currentItem} />
-                </Box>
+                <SlideFade
+                    in={_slideTransDisclosure.isOpen}
+                    style={{ zIndex: "999" }}
+                    offsetY={"-20px"}
+                    delay={0.3}
+                >
+                    <Box
+                        h={20}
+                        backdropFilter={"blur(5px)"}
+                        bg={"whiteAlpha.800"}
+                    >
+                        <Navbar items={items} currentItem={currentItem} />
+                    </Box>
+                </SlideFade>
 
                 <Box px={{ base: "8", md: "8", lg: "32" }} py={12}>
                     <Routes>
@@ -76,6 +97,7 @@ export const MainLayout = () => {
                         <Route path="/price-sheet" element={<PriceSheet />} />
                         <Route path="/tos" element={<TOS />} />
                         <Route path="/commission" element={<Commission />} />
+                        <Route path="/comm-form" element={<CommissionForm />} />
                     </Routes>
                 </Box>
 
@@ -88,7 +110,7 @@ export const MainLayout = () => {
                 </Center>
             </Stack>
 
-            <FAB onClick={onOpen}>
+            <FAB onClick={_drawerDisclosure.onOpen}>
                 <AiOutlineInfo />
             </FAB>
         </>

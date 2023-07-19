@@ -1,14 +1,17 @@
 import {
-    Box,
     Button,
     ButtonGroup,
     Card,
     CardBody,
+    Divider,
     Heading,
     Link,
+    ScaleFade,
     SimpleGrid,
     Stack,
+    useDisclosure,
 } from "@chakra-ui/react"
+import { useEffect } from "react"
 import {
     FaDiscord,
     FaExternalLinkAlt,
@@ -70,48 +73,54 @@ export const MySocials = () => {
         },
     ]
 
-    return (
-        <Stack>
-            <Box>
-                <Card variant={"outline"}>
-                    <CardBody px={{ base: 4, md: 16 }} py={10}>
-                        <Stack gap={10} align={"center"}>
-                            <Heading
-                                fontFamily={"Fredoka, Comfortaa, Arial"}
-                                size={"xl"}
-                                color={"blackAlpha.800"}
-                            >
-                                Find me here!
-                            </Heading>
+    const _transition = useDisclosure()
 
-                            <ButtonGroup w={"100%"} variant={"outline"}>
-                                <SimpleGrid
-                                    columns={{ base: 1, md: 2, lg: 3 }}
-                                    gap={5}
-                                    w={"100%"}
-                                >
-                                    {_buttonContent.map((content) => (
-                                        <Button
-                                            key={content.children}
-                                            as={Link}
-                                            href={content.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            style={{ textDecoration: "none" }}
-                                            color={content.color}
-                                            borderColor={content.borderColor}
-                                            leftIcon={content.leftIcon}
-                                            rightIcon={<FaExternalLinkAlt />}
-                                        >
-                                            {content.children}
-                                        </Button>
-                                    ))}
-                                </SimpleGrid>
-                            </ButtonGroup>
-                        </Stack>
-                    </CardBody>
-                </Card>
-            </Box>
-        </Stack>
+    useEffect(() => {
+        _transition.onToggle()
+    }, [])
+
+    return (
+        <ScaleFade in={_transition.isOpen} delay={0.3}>
+            <Card variant={"outline"} px={{ sm: 8, md: 16 }} py={10}>
+                <CardBody>
+                    <Stack gap={8} align={"center"}>
+                        <Heading
+                            fontFamily={"Fredoka, Comfortaa, Arial"}
+                            size={"xl"}
+                            color={"blackAlpha.800"}
+                        >
+                            Find me here!
+                        </Heading>
+
+                        <Divider />
+
+                        <ButtonGroup w={"100%"} variant={"outline"}>
+                            <SimpleGrid
+                                columns={{ base: 1, md: 2, lg: 3 }}
+                                gap={5}
+                                w={"100%"}
+                            >
+                                {_buttonContent.map((content) => (
+                                    <Button
+                                        key={content.children}
+                                        as={Link}
+                                        href={content.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{ textDecoration: "none" }}
+                                        color={content.color}
+                                        borderColor={content.borderColor}
+                                        leftIcon={content.leftIcon}
+                                        rightIcon={<FaExternalLinkAlt />}
+                                    >
+                                        {content.children}
+                                    </Button>
+                                ))}
+                            </SimpleGrid>
+                        </ButtonGroup>
+                    </Stack>
+                </CardBody>
+            </Card>
+        </ScaleFade>
     )
 }

@@ -1,4 +1,10 @@
-import { List, ListIcon, ListItem, SimpleGrid } from "@chakra-ui/react"
+import {
+    List,
+    ListIcon,
+    ListItem,
+    SimpleGrid,
+    useDisclosure,
+} from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
 import CardList, { CardListProps } from "../../components/CardGrid"
 
@@ -123,6 +129,8 @@ export const PriceSheet = () => {
             price: "$25",
         },
     ]
+
+    const _cardHoverTrans = useDisclosure()
 
     return (
         <SimpleGrid
