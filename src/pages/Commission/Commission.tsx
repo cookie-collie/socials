@@ -8,24 +8,37 @@ import {
     Divider,
     Heading,
     Modal,
+    ModalBody,
+    ModalCloseButton,
     ModalContent,
+    ModalFooter,
+    ModalHeader,
     ModalOverlay,
     Stack,
     Text,
     useDisclosure,
 } from "@chakra-ui/react"
-import { useState } from "react"
-import { CommissionProcess } from "../../fragments/CommissionProcess"
+import { useRef, useState } from "react"
+import { Pagination } from "../../components/Pagination"
+import { CommissionDetails } from "../../fragments/CommissionDetails/CommissionDetails"
 import PriceSheet from "../../fragments/PriceSheet"
 import TOS from "../../fragments/TOS"
+import { usePaginationLogic } from "../../utils/usePaginationLogic"
+import { useScrollToTop } from "../../utils/useScrollToTop"
 
 export const Commission = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { currentPage, setCurrentPage } = usePaginationLogic(1)
+
+    const _modalBodyRef = useRef<HTMLDivElement>(null)
+    const _scrollToTop = useScrollToTop(_modalBodyRef)
+
     const [modalInnerComp, setModalInnerComp] = useState("")
 
-    const handleButtonOnClick = (innerComp: "tos" | "process") => {
+    const handleButtonOnClick = (innerComp: "tos" | "details" | "extras") => {
         onOpen()
         setModalInnerComp(innerComp)
+        setCurrentPage(1)
     }
 
     return (
@@ -37,12 +50,52 @@ export const Commission = () => {
                 size={"3xl"}
             >
                 <ModalOverlay />
+
                 <ModalContent
                     fontFamily={"Fredoka, Comfortaa, Arial"}
                     overflow={"hidden"}
                 >
-                    {modalInnerComp === "tos" && <TOS />}
-                    {modalInnerComp === "process" && <CommissionProcess />}
+                    <ModalCloseButton
+                        borderRadius={"full"}
+                        color={"whiteAlpha.900"}
+                    />
+
+                    <ModalHeader
+                        backgroundColor={"pink.400"}
+                        borderBottomRadius={"2xl"}
+                    >
+                        <Heading
+                            fontFamily={"Fredoka, Comfortaa, Arial"}
+                            size={"xl"}
+                            color={"whiteAlpha.900"}
+                            textAlign={"center"}
+                        >
+                            {modalInnerComp === "tos" && "Terms of Service"}
+                            {modalInnerComp === "details" &&
+                                "Commission Details"}
+                        </Heading>
+                    </ModalHeader>
+
+                    <ModalBody py={8} ref={_modalBodyRef}>
+                        {modalInnerComp === "tos" && (
+                            <TOS currentPage={currentPage} />
+                        )}
+                        {modalInnerComp === "details" && (
+                            <CommissionDetails currentPage={currentPage} />
+                        )}
+                    </ModalBody>
+
+                    <ModalFooter justifyContent={"center"}>
+                        <Box>
+                            <Pagination
+                                maxPage={modalInnerComp === "details" ? 3 : 2}
+                                currentPage={currentPage}
+                                setPageCallback={setCurrentPage}
+                                onNext={_scrollToTop}
+                                onPrevious={_scrollToTop}
+                            />
+                        </Box>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
 
@@ -92,10 +145,10 @@ export const Commission = () => {
                                         </Button>
                                         <Button
                                             onClick={() =>
-                                                handleButtonOnClick("process")
+                                                handleButtonOnClick("details")
                                             }
                                         >
-                                            Commission Process
+                                            Commission Details
                                         </Button>
                                     </Stack>
                                 </ButtonGroup>
