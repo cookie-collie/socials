@@ -1,10 +1,4 @@
-import {
-    List,
-    ListIcon,
-    ListItem,
-    SimpleGrid,
-    useDisclosure,
-} from "@chakra-ui/react"
+import { List, ListIcon, ListItem, SimpleGrid } from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
 import CardList, { CardListProps } from "../../components/CardGrid"
 
@@ -87,6 +81,7 @@ export const PriceSheet = () => {
             coverImgUrl: _emotesImgLinks[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32923",
             price: "$10",
+            id: "card-emotes",
         },
 
         {
@@ -96,6 +91,7 @@ export const PriceSheet = () => {
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32921",
             price: "$25+",
             additionalInfo: <>Detailed background: +$5</>,
+            id: "card-half-body",
         },
 
         {
@@ -111,6 +107,7 @@ export const PriceSheet = () => {
                     Detailed background: +$5
                 </>
             ),
+            id: "card-full-body",
         },
 
         {
@@ -119,6 +116,7 @@ export const PriceSheet = () => {
             coverImgUrl: _refSheetImgLinks[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32925",
             price: "$50",
+            id: "card-ref-sheet",
         },
 
         {
@@ -127,10 +125,9 @@ export const PriceSheet = () => {
             coverImgUrl: _plushPhoneBGImgLinks[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32924",
             price: "$25",
+            id: "card-plush-bg",
         },
     ]
-
-    const _cardHoverTrans = useDisclosure()
 
     return (
         <SimpleGrid
