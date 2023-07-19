@@ -7,6 +7,8 @@ import {
     CardHeader,
     Divider,
     Heading,
+    List,
+    ListItem,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -14,11 +16,12 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    ScaleFade,
     Stack,
     Text,
     useDisclosure,
 } from "@chakra-ui/react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Pagination } from "../../components/Pagination"
 import { CommissionDetails } from "../../fragments/CommissionDetails"
 import { Extras } from "../../fragments/Extras"
@@ -45,8 +48,13 @@ export const Commission = () => {
         setCurrentPage(1)
     }
 
+    const _transition = useDisclosure()
+    useEffect(() => {
+        _transition.onToggle()
+    }, [])
+
     return (
-        <>
+        <ScaleFade in={_transition.isOpen} delay={0.3}>
             <Modal
                 isOpen={isOpen}
                 onClose={onClose}
@@ -136,16 +144,28 @@ export const Commission = () => {
                         </CardHeader>
                         <Divider />
                         <CardBody>
-                            <Stack fontSize={"xl"} textAlign={"center"} gap={4}>
-                                <Text>
-                                    Commissions are open with unlimited slots
-                                    until further notice
-                                </Text>
+                            <Stack
+                                fontSize={"xl"}
+                                textAlign={"center"}
+                                gap={8}
+                                color={"blackAlpha.700"}
+                            >
+                                <List spacing={4}>
+                                    <ListItem>
+                                        <Text>
+                                            Commissions are open with unlimited
+                                            slots until further notice
+                                        </Text>
+                                    </ListItem>
 
-                                <Text>
-                                    Please refer thoroughly through the TOS and
-                                    the process before commissioning me
-                                </Text>
+                                    <ListItem>
+                                        <Text>
+                                            Please refer thoroughly through the
+                                            TOS and the process before
+                                            commissioning me
+                                        </Text>
+                                    </ListItem>
+                                </List>
 
                                 <ButtonGroup
                                     justifyContent={"center"}
@@ -187,6 +207,6 @@ export const Commission = () => {
                     <PriceSheet />
                 </Box>
             </Stack>
-        </>
+        </ScaleFade>
     )
 }
