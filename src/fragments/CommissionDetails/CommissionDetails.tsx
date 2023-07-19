@@ -1,11 +1,18 @@
 import { Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react"
+import { useEffect } from "react"
 import { MdCookie } from "react-icons/md"
 
 interface CommDetailsProps {
     currentPage?: number
+    setMaxPage?: (page: number) => void
 }
 export const CommissionDetails = (props: CommDetailsProps) => {
-    const { currentPage = 1 } = props
+    const { currentPage = 1, setMaxPage } = props
+
+    useEffect(() => {
+        setMaxPage?.(3)
+    }, [])
+
     const _commDetails = [
         <>
             Please include your contacts (Discord, Twitter, ...) when

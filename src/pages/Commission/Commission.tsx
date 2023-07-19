@@ -20,7 +20,8 @@ import {
 } from "@chakra-ui/react"
 import { useRef, useState } from "react"
 import { Pagination } from "../../components/Pagination"
-import { CommissionDetails } from "../../fragments/CommissionDetails/CommissionDetails"
+import { CommissionDetails } from "../../fragments/CommissionDetails"
+import { Extras } from "../../fragments/Extras"
 import PriceSheet from "../../fragments/PriceSheet"
 import TOS from "../../fragments/TOS"
 import { usePaginationLogic } from "../../utils/usePaginationLogic"
@@ -28,12 +29,15 @@ import { useScrollToTop } from "../../utils/useScrollToTop"
 
 export const Commission = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { currentPage, setCurrentPage } = usePaginationLogic(1)
+    const { currentPage, setCurrentPage, maxPage, setMaxPage } =
+        usePaginationLogic(1)
 
     const _modalBodyRef = useRef<HTMLDivElement>(null)
     const _scrollToTop = useScrollToTop(_modalBodyRef)
 
-    const [modalInnerComp, setModalInnerComp] = useState("")
+    const [modalInnerComp, setModalInnerComp] = useState<
+        "tos" | "details" | "extras"
+    >("tos")
 
     const handleButtonOnClick = (innerComp: "tos" | "details" | "extras") => {
         onOpen()
@@ -70,25 +74,38 @@ export const Commission = () => {
                             color={"whiteAlpha.900"}
                             textAlign={"center"}
                         >
-                            {modalInnerComp === "tos" && "Terms of Service"}
-                            {modalInnerComp === "details" &&
-                                "Commission Details"}
+                            {modalInnerComp === "tos"
+                                ? "Terms of Service"
+                                : modalInnerComp === "details"
+                                ? "Commission Details"
+                                : modalInnerComp === "extras"
+                                ? "Extras and Fees"
+                                : ""}
                         </Heading>
                     </ModalHeader>
 
                     <ModalBody py={8} ref={_modalBodyRef}>
-                        {modalInnerComp === "tos" && (
-                            <TOS currentPage={currentPage} />
-                        )}
-                        {modalInnerComp === "details" && (
-                            <CommissionDetails currentPage={currentPage} />
+                        {modalInnerComp === "tos" ? (
+                            <TOS
+                                currentPage={currentPage}
+                                setMaxPage={setMaxPage}
+                            />
+                        ) : modalInnerComp === "details" ? (
+                            <CommissionDetails
+                                currentPage={currentPage}
+                                setMaxPage={setMaxPage}
+                            />
+                        ) : modalInnerComp === "extras" ? (
+                            <Extras setMaxPage={setMaxPage} />
+                        ) : (
+                            <></>
                         )}
                     </ModalBody>
 
                     <ModalFooter justifyContent={"center"}>
                         <Box>
                             <Pagination
-                                maxPage={modalInnerComp === "details" ? 3 : 2}
+                                maxPage={maxPage}
                                 currentPage={currentPage}
                                 setPageCallback={setCurrentPage}
                                 onNext={_scrollToTop}
@@ -143,12 +160,21 @@ export const Commission = () => {
                                         >
                                             Terms of Service
                                         </Button>
+
                                         <Button
                                             onClick={() =>
                                                 handleButtonOnClick("details")
                                             }
                                         >
                                             Commission Details
+                                        </Button>
+
+                                        <Button
+                                            onClick={() =>
+                                                handleButtonOnClick("extras")
+                                            }
+                                        >
+                                            Extras
                                         </Button>
                                     </Stack>
                                 </ButtonGroup>
