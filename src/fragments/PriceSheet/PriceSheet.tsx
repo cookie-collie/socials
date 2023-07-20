@@ -1,6 +1,7 @@
 import { List, ListIcon, ListItem, SimpleGrid } from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
-import CardList, { CardListProps } from "../../components/CardGrid"
+import CardList from "../../components/CardGrid"
+import { CustomCardProps } from "../../components/PriceCard"
 
 export const PriceSheet = () => {
     const _halfBodyImgLinks = [
@@ -74,7 +75,7 @@ export const PriceSheet = () => {
         )
     }
 
-    const _commCard: CardListProps[] = [
+    const _commCard: CustomCardProps[] = [
         {
             heading: "Emotes",
             body: _renderBodyList(_emotesDes),

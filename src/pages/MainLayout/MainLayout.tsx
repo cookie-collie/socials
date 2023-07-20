@@ -90,7 +90,7 @@ export const MainLayout = () => {
                     </Box>
                 </SlideFade>
 
-                <Box px={{ base: "8", md: "8", lg: "32" }} py={12}>
+                <Box px={{ base: "8", md: "8", lg: "32" }} py={12} flex={1}>
                     <Routes>
                         <Route path="/about-me" element={<AboutMe />} />
                         <Route path="/socials" element={<MySocials />} />
