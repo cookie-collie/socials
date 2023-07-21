@@ -18,8 +18,8 @@ import { AiFillHome, AiOutlineInfo } from "react-icons/ai"
 import { useLocation } from "react-router-dom"
 import { FAB } from "../../components/FAB"
 import { Navbar, NavbarItem } from "../../components/Navbar"
-import AboutWebsite from "../../fragments/AboutWebsite"
 import { CustomRoutes } from "../../routes"
+import { AboutWebsite } from "../../fragments/AboutWebsite"
 
 export const MainLayout = () => {
     const items: NavbarItem[] = [
