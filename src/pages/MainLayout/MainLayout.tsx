@@ -15,22 +15,17 @@ import {
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { AiFillHome, AiOutlineInfo } from "react-icons/ai"
-import { Route, Routes, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { FAB } from "../../components/FAB"
 import { Navbar, NavbarItem } from "../../components/Navbar"
 import AboutWebsite from "../../fragments/AboutWebsite"
-import PriceSheet from "../../fragments/PriceSheet"
-import TOS from "../../fragments/TOS"
-import AboutMe from "../AboutMe"
-import { Commission } from "../Commission"
-import { CommissionForm } from "../CommissionForm"
-import MySocials from "../MySocials"
+import { CustomRoutes } from "../../routes"
 
 export const MainLayout = () => {
     const items: NavbarItem[] = [
         { label: "About Me", id: "about-me" },
         { label: "My socials", id: "socials" },
-        { label: "Commission", id: "commission" },
+        { label: "Commissions", id: "commissions" },
         { label: "Commission Form", id: "comm-form" },
     ]
 
@@ -44,14 +39,10 @@ export const MainLayout = () => {
     }, [_path])
 
     const _drawerDisclosure = useDisclosure()
-    const _slideTransDisclosure = useDisclosure()
-
-    useEffect(() => {
-        _slideTransDisclosure.onToggle()
-    }, [])
 
     return (
         <>
+            {/* About this website drawer */}
             <Drawer
                 placement="right"
                 onClose={_drawerDisclosure.onClose}
@@ -74,30 +65,27 @@ export const MainLayout = () => {
                 </DrawerContent>
             </Drawer>
 
+            {/* Main layout */}
             <Stack
                 align={"stretch"}
                 minHeight={"100%"}
                 color={"blackAlpha.700"}
             >
+                {/* Navbar area */}
                 <Box fontWeight={"bold"} color={"pink.500"}>
                     <Navbar
                         items={items}
-                        homeSection={<Icon as={AiFillHome} boxSize={6}/>}
+                        homeSection={<Icon as={AiFillHome} boxSize={6} />}
                         currentItem={currentItem}
                     />
                 </Box>
 
+                {/* Body area */}
                 <Box px={{ base: "8", md: "8", lg: "32" }} py={12} flex={1}>
-                    <Routes>
-                        <Route path="/about-me" element={<AboutMe />} />
-                        <Route path="/socials" element={<MySocials />} />
-                        <Route path="/price-sheet" element={<PriceSheet />} />
-                        <Route path="/tos" element={<TOS />} />
-                        <Route path="/commission" element={<Commission />} />
-                        <Route path="/comm-form" element={<CommissionForm />} />
-                    </Routes>
+                    <CustomRoutes />
                 </Box>
 
+                {/* Footer area */}
                 <Center h={40} bgColor={"pink.300"}>
                     <Stack textAlign={"center"} color={"whiteAlpha.900"}>
                         <Text>
@@ -107,6 +95,7 @@ export const MainLayout = () => {
                 </Center>
             </Stack>
 
+            {/* FAB to open about this website drawer */}
             <FAB onClick={_drawerDisclosure.onOpen}>
                 <AiOutlineInfo />
             </FAB>

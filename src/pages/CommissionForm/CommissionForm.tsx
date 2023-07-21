@@ -29,8 +29,8 @@ export const CommissionForm = () => {
         </>,
 
         <>
-            Click the button below to visit the Commission Details page to take
-            a look at my TOS and everything else if you haven&apos;t
+            Click the button below to visit the Commissions page to take a look
+            at my TOS and everything else if you haven&apos;t
         </>,
     ]
 
@@ -77,7 +77,7 @@ export const CommissionForm = () => {
                                 colorScheme="pink"
                                 justifySelf={"center"}
                             >
-                                Commission Details
+                                Commission
                             </Button>
                         </Flex>
 
