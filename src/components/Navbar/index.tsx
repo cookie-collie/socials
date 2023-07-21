@@ -1,4 +1,4 @@
 import { Navbar } from "./Navbar"
-import { NavbarItem } from "./NavbarItem"
-export { Navbar }
+import { NavbarItem, NavbarItemCompact } from "./NavItem"
+export { Navbar, NavbarItemCompact }
 export type { NavbarItem }

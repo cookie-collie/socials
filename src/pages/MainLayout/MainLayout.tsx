@@ -8,13 +8,13 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
-    SlideFade,
+    Icon,
     Stack,
     Text,
     useDisclosure,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { AiOutlineInfo } from "react-icons/ai"
+import { AiFillHome, AiOutlineInfo } from "react-icons/ai"
 import { Route, Routes, useLocation } from "react-router-dom"
 import { FAB } from "../../components/FAB"
 import { Navbar, NavbarItem } from "../../components/Navbar"
@@ -28,10 +28,10 @@ import MySocials from "../MySocials"
 
 export const MainLayout = () => {
     const items: NavbarItem[] = [
-        { label: "About Me", key: "about-me" },
-        { label: "My socials", key: "socials" },
-        { label: "Commission", key: "commission" },
-        { label: "Commission Form", key: "comm-form" },
+        { label: "About Me", id: "about-me" },
+        { label: "My socials", id: "socials" },
+        { label: "Commission", id: "commission" },
+        { label: "Commission Form", id: "comm-form" },
     ]
 
     const _path = useLocation()
@@ -74,21 +74,18 @@ export const MainLayout = () => {
                 </DrawerContent>
             </Drawer>
 
-            <Stack align={"stretch"} minHeight={"100%"}>
-                <SlideFade
-                    in={_slideTransDisclosure.isOpen}
-                    style={{ zIndex: "999" }}
-                    offsetY={"-20px"}
-                    delay={0.3}
-                >
-                    <Box
-                        h={20}
-                        backdropFilter={"blur(5px)"}
-                        bg={"whiteAlpha.800"}
-                    >
-                        <Navbar items={items} currentItem={currentItem} />
-                    </Box>
-                </SlideFade>
+            <Stack
+                align={"stretch"}
+                minHeight={"100%"}
+                color={"blackAlpha.700"}
+            >
+                <Box fontWeight={"bold"} color={"pink.500"}>
+                    <Navbar
+                        items={items}
+                        homeSection={<Icon as={AiFillHome} boxSize={6}/>}
+                        currentItem={currentItem}
+                    />
+                </Box>
 
                 <Box px={{ base: "8", md: "8", lg: "32" }} py={12} flex={1}>
                     <Routes>
