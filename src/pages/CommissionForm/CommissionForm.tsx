@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import { RequestForm } from "../../fragments/RequestForm"
 
 export const CommissionForm = () => {
     const _info = [
@@ -81,7 +82,9 @@ export const CommissionForm = () => {
                             </Button>
                         </Flex>
 
-                        <Box />
+                        <Box>
+                            <RequestForm />
+                        </Box>
                     </Stack>
                 </CardBody>
             </Card>
