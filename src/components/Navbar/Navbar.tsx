@@ -1,74 +1,97 @@
 import {
-    Box,
-    Button,
-    ButtonGroup,
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Divider,
     Flex,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
+    Stack,
 } from "@chakra-ui/react"
-import { MdMenu } from "react-icons/md"
-import { Link } from "react-router-dom"
-import { NavbarItem } from "./NavbarItem"
+import { NavItem, NavbarItem, NavbarItemCompact } from "./NavItem"
 
 interface NavbarProps {
     onSelectItem?: (e: any) => void
-    currentItem: string
-    items: NavbarItem[]
+    currentItem?: string
+    items?: NavbarItem[]
+    homeSection?: React.ReactNode
+    subSection?: React.ReactNode
 }
 
 export const Navbar = (props: NavbarProps) => {
-    const { currentItem, onSelectItem, items } = props
+    const { currentItem, onSelectItem, items, homeSection, subSection } = props
 
     return (
-        <Flex
-            minWidth={"max-content"}
-            alignItems={"center"}
-            minHeight={"100%"}
-            justifyContent={"center"}
+        <Stack
+            direction={{ base: "column", sm: "row" }}
+            minH={12}
+            minW={"100vw"}
+            gap={0}
             shadow={"md"}
         >
-            <Box px={"2"}>
-                <ButtonGroup variant={"ghost"} gap={4} colorScheme="pink">
-                    <>
-                        {items.map((item) => (
-                            <Button
-                                as={Link}
-                                to={"/" + item.key}
-                                key={item.key}
-                                onClick={onSelectItem}
-                                name={item.key}
-                                variant={
-                                    currentItem === item.key ? "solid" : "ghost"
-                                }
-                                display={{ base: "none", sm: "-webkit-box" }}
-                            >
-                                {item.label}
-                            </Button>
-                        ))}
+            <Flex
+                justify={"center"}
+                align={"center"}
+                px={8}
+                minH={{ base: 12 }}
+                flex={{ base: 1, sm: 0 }}
+            >
+                {homeSection}
+            </Flex>
 
-                        <Box display={{ base: "-webkit-box", sm: "none" }}>
-                            <Menu>
-                                <MenuButton as={Button} variant={"ghost"}>
-                                    <MdMenu />
-                                </MenuButton>
-                                <MenuList justifySelf={"center"}>
-                                    {items.map((item) => (
-                                        <MenuItem
-                                            key={item.key}
-                                            as={Link}
-                                            to={"/" + item.key}
-                                        >
-                                            {item.label}
-                                        </MenuItem>
-                                    ))}
-                                </MenuList>
-                            </Menu>
-                        </Box>
-                    </>
-                </ButtonGroup>
-            </Box>
-        </Flex>
+            {homeSection && (
+                <Divider
+                    orientation="vertical"
+                    h={12}
+                    display={{ base: "none", sm: "block" }}
+                    my={4}
+                />
+            )}
+
+            <Flex
+                align={"center"}
+                px={8}
+                flex={1}
+                justify={"space-between"}
+                display={{ base: "none", sm: "flex" }}
+            >
+                <Stack direction={"row"} gap={0} h={"100%"}>
+                    {items?.map((item) => (
+                        <NavItem
+                            key={item.id}
+                            label={item.label}
+                            id={item.id}
+                            isActive={currentItem === item.id ? true : false}
+                        />
+                    ))}
+                </Stack>
+
+                <Flex align={"center"} justify={"center"} h={"100%"}>
+                    {subSection}
+                </Flex>
+            </Flex>
+
+            <Accordion allowToggle display={{ base: "block", sm: "none" }}>
+                <AccordionItem>
+                    <AccordionButton justifyContent={"center"}>
+                        <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel>
+                        <Stack>
+                            {items?.map((item) => (
+                                <NavbarItemCompact
+                                    key={item.id}
+                                    label={item.label}
+                                    id={item.id}
+                                    isActive={
+                                        currentItem === item.id ? true : false
+                                    }
+                                />
+                            ))}
+                        </Stack>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
+        </Stack>
     )
 }
