@@ -62,7 +62,11 @@ export const CustomCard = (props: CustomCardProps) => {
 
     return (
         <>
-            <Card overflow={"hidden"} variant={variant}>
+            <Card
+                overflow={"hidden"}
+                variant={variant}
+                color={"blackAlpha.700"}
+            >
                 <motion.div whileHover={"hover"} variants={_coverImgVariants}>
                     <AspectRatio maxH={"200px"}>
                         <>
@@ -121,7 +125,7 @@ export const CustomCard = (props: CustomCardProps) => {
                             {heading}
                         </Heading>
 
-                        <Stat textAlign={"center"}>
+                        <Stat textAlign={"center"} color={"blackAlpha.800"}>
                             <StatNumber>{price}</StatNumber>
                             <StatHelpText>{additionalInfo}</StatHelpText>
                         </Stat>
