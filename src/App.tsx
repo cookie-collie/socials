@@ -1,6 +1,6 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import { HashRouter } from "react-router-dom"
-import MainLayout from "./pages/MainLayout"
+import { MainLayout } from "./MainLayout"
 
 function App() {
     const _theme = extendTheme({

@@ -2,13 +2,13 @@ import { Box, Flex, Text } from "@chakra-ui/react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 
-export interface NavbarItem {
+export interface NavItemProps {
     label: string
     id: string
     isActive?: boolean
 }
 
-export const NavItem = (props: NavbarItem) => {
+export const NavItem = (props: NavItemProps) => {
     const { label, id, isActive = false } = props
 
     const _navItemVariants = {
@@ -72,7 +72,7 @@ export const NavItem = (props: NavbarItem) => {
     )
 }
 
-export const NavbarItemCompact = (props: NavbarItem) => {
+export const NavbarItemCompact = (props: NavItemProps) => {
     const { label, id, isActive } = props
 
     const _navItemLabelVariants = {

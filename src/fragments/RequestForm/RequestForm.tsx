@@ -16,15 +16,13 @@ import {
     Tooltip,
 } from "@chakra-ui/react"
 import { useState } from "react"
-import { useInputValidate } from "../../utils/useInputValidate"
-import { useRadioOnChange } from "../../utils/useRadioOnChange"
-import { useStateCustom } from "../../utils/useStateCustom"
+import { useInputValidate, useStateCustom } from "../../utils"
 
 export const RequestForm = () => {
     const _validateEmail = useInputValidate("email")
     const _validateRefLinks = useInputValidate("none")
 
-    const _handleRadioValue = useRadioOnChange("No")
+    const _handleRadioValue = useStateCustom("No")
     const _detailedBgState = useStateCustom(false)
     const _additionalCharState = useStateCustom(false)
 

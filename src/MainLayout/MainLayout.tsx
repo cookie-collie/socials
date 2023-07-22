@@ -16,13 +16,13 @@ import {
 import { useEffect, useState } from "react"
 import { AiFillHome, AiOutlineInfo } from "react-icons/ai"
 import { useLocation } from "react-router-dom"
-import { FAB } from "../../components/FAB"
-import { Navbar, NavbarItem } from "../../components/Navbar"
-import { CustomRoutes } from "../../routes"
-import { AboutWebsite } from "../../fragments/AboutWebsite"
+import { FAB, Navbar } from "../components"
+import { NavItemProps } from "../components/Navbar"
+import { AboutWebsite } from "../fragments"
+import { CustomRoutes } from "../routes"
 
 export const MainLayout = () => {
-    const items: NavbarItem[] = [
+    const items: NavItemProps[] = [
         { label: "About Me", id: "about-me" },
         { label: "My socials", id: "socials" },
         { label: "Commissions", id: "commissions" },
