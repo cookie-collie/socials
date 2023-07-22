@@ -1,6 +1,9 @@
 import {
     Box,
     Button,
+    Checkbox,
+    CheckboxGroup,
+    Flex,
     FormControl,
     FormErrorMessage,
     FormLabel,
@@ -10,18 +13,20 @@ import {
     Select,
     Stack,
     Textarea,
+    Tooltip,
 } from "@chakra-ui/react"
+import { useState } from "react"
 import { useInputValidate } from "../../utils/useInputValidate"
 import { useRadioOnChange } from "../../utils/useRadioOnChange"
+import { useStateCustom } from "../../utils/useStateCustom"
 
 export const RequestForm = () => {
-    const _validateEmail = useInputValidate({ validationType: "email" })
-    const _validateRefLinks = useInputValidate({})
-    const _handleRadioValue = useRadioOnChange("No")
+    const _validateEmail = useInputValidate("email")
+    const _validateRefLinks = useInputValidate("none")
 
-    const _handleSubmit = (e: any) => {
-        e.preventDefault()
-    }
+    const _handleRadioValue = useRadioOnChange("No")
+    const _detailedBgState = useStateCustom(false)
+    const _additionalCharState = useStateCustom(false)
 
     const _commTypes = [
         "Emotes",
@@ -30,6 +35,30 @@ export const RequestForm = () => {
         "Reference Sheet",
         "Plush Phone Wallpaper",
     ]
+
+    const [commType, setCommType] = useState(_commTypes[0])
+
+    const _handleCommTypeOnChange = (e: any) => {
+        setCommType(e.target.value)
+        _detailedBgState.setValue(false)
+        _additionalCharState.setValue(false)
+    }
+
+    const _handleSubmit = (e: any) => {
+        e.preventDefault()
+        const _formValue = {
+            email: e.target.elements["email"].value,
+            name: e.target.elements["name"].value,
+            "comm-type": e.target.elements["comm-type"].value,
+            "detailed-bg": e.target.elements["detailed-bg"].checked,
+            "additional-char": e.target.elements["additional-char"].checked,
+            "ref-links": e.target.elements["ref-links"].value,
+            "is-secret": e.target.elements["is-secret"].value,
+            contacts: e.target.elements["contacts"].value,
+            "extra-info": e.target.elements["extra-info"].value,
+        }
+        console.log(_formValue)
+    }
 
     return (
         <form onSubmit={_handleSubmit}>
@@ -48,7 +77,7 @@ export const RequestForm = () => {
                             </FormErrorMessage>
                         ) : !_validateEmail.isMatch ? (
                             <FormErrorMessage>
-                                Input is not a valid email
+                                This is not a valid email
                             </FormErrorMessage>
                         ) : (
                             <></>
@@ -66,7 +95,10 @@ export const RequestForm = () => {
                 <Box>
                     <FormControl isRequired>
                         <FormLabel>Commission type</FormLabel>
-                        <Select placeContent={"asdad"} name="comm-type">
+                        <Select
+                            name="comm-type"
+                            onChange={_handleCommTypeOnChange}
+                        >
                             {_commTypes.map((item) => (
                                 <option key={item} value={item}>
                                     {item}
@@ -74,6 +106,40 @@ export const RequestForm = () => {
                             ))}
                         </Select>
                     </FormControl>
+                </Box>
+
+                <Box>
+                    <CheckboxGroup>
+                        <Stack>
+                            <Checkbox
+                                name="detailed-bg"
+                                isDisabled={
+                                    commType !== "Half Body" &&
+                                    commType !== "Full Body"
+                                }
+                                isChecked={_detailedBgState.value}
+                                onChange={() =>
+                                    _detailedBgState.setValue(
+                                        !_detailedBgState.value
+                                    )
+                                }
+                            >
+                                Detailed background
+                            </Checkbox>
+                            <Checkbox
+                                name="additional-char"
+                                isDisabled={commType !== "Full Body"}
+                                isChecked={_additionalCharState.value}
+                                onChange={() =>
+                                    _additionalCharState.setValue(
+                                        !_additionalCharState.value
+                                    )
+                                }
+                            >
+                                Additional character
+                            </Checkbox>
+                        </Stack>
+                    </CheckboxGroup>
                 </Box>
 
                 <Box>
@@ -100,14 +166,11 @@ export const RequestForm = () => {
                         <RadioGroup
                             onChange={_handleRadioValue.setValue}
                             value={_handleRadioValue.value}
+                            name="is-secret"
                         >
                             <Stack direction={"row"}>
-                                <Radio value="Yes" name="is-secret">
-                                    Yes
-                                </Radio>
-                                <Radio value="No" name="not-secret">
-                                    No
-                                </Radio>
+                                <Radio value="Yes">Yes</Radio>
+                                <Radio value="No">No</Radio>
                             </Stack>
                         </RadioGroup>
                     </FormControl>
@@ -127,9 +190,28 @@ export const RequestForm = () => {
                     </FormControl>
                 </Box>
 
-                <Box>
-                    <Button type="submit">Submit</Button>
-                </Box>
+                <Flex justify={"center"}>
+                    <Tooltip
+                        label="Please check all the fields again for errors"
+                        isDisabled={
+                            !(
+                                _validateEmail.isError ||
+                                _validateRefLinks.isError
+                            )
+                        }
+                    >
+                        <Button
+                            type="submit"
+                            colorScheme="pink"
+                            isDisabled={
+                                _validateEmail.isError ||
+                                _validateRefLinks.isError
+                            }
+                        >
+                            Submit
+                        </Button>
+                    </Tooltip>
+                </Flex>
             </Stack>
         </form>
     )

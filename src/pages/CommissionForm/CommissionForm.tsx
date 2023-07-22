@@ -1,11 +1,11 @@
 import {
     Box,
     Button,
+    ButtonGroup,
     Card,
     CardBody,
     CardHeader,
     Divider,
-    Flex,
     Heading,
     List,
     ListItem,
@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import { FormGuide } from "../../fragments/FormGuide"
 import { RequestForm } from "../../fragments/RequestForm"
 
 export const CommissionForm = () => {
@@ -35,59 +36,75 @@ export const CommissionForm = () => {
         </>,
     ]
 
+    const _formGuideDisclosure = useDisclosure()
+
     const _transition = useDisclosure()
     useEffect(() => {
         _transition.onToggle()
     }, [])
 
     return (
-        <ScaleFade in={_transition.isOpen} delay={0.3}>
-            <Card
-                variant={"outline"}
-                px={{ sm: 8, md: 16 }}
-                py={10}
-                color={"blackAlpha.700"}
-                fontSize={"xl"}
-            >
-                <CardHeader>
-                    <Heading
-                        fontFamily={"Fredoka, Comfortaa, Arial"}
-                        size={"xl"}
-                        color={"blackAlpha.800"}
-                        textAlign={"center"}
-                    >
-                        Commission Form
-                    </Heading>
-                </CardHeader>
+        <>
+            <ScaleFade in={_transition.isOpen} delay={0.3}>
+                <Card
+                    variant={"outline"}
+                    px={{ sm: 8, md: 16 }}
+                    py={10}
+                    color={"blackAlpha.700"}
+                    fontSize={"xl"}
+                >
+                    <CardHeader>
+                        <Heading
+                            fontFamily={"Fredoka, Comfortaa, Arial"}
+                            size={"xl"}
+                            color={"blackAlpha.800"}
+                            textAlign={"center"}
+                        >
+                            Commission Form
+                        </Heading>
+                    </CardHeader>
 
-                <Divider />
+                    <Divider />
 
-                <CardBody>
-                    <Stack gap={8}>
-                        <List textAlign={"center"} spacing={4}>
-                            {_info.map((item, i) => (
-                                <ListItem key={"item-" + i}>{item}</ListItem>
-                            ))}
-                        </List>
+                    <CardBody>
+                        <Stack gap={8}>
+                            <List textAlign={"center"} spacing={4}>
+                                {_info.map((item, i) => (
+                                    <ListItem key={"item-" + i}>
+                                        {item}
+                                    </ListItem>
+                                ))}
+                            </List>
 
-                        <Flex justify={"center"}>
-                            <Button
-                                as={Link}
-                                to={"/commission"}
-                                variant={"solid"}
+                            <ButtonGroup
+                                justifyContent={"center"}
                                 colorScheme="pink"
-                                justifySelf={"center"}
                             >
-                                Commission
-                            </Button>
-                        </Flex>
+                                <Stack>
+                                    <Button as={Link} to={"/commissions"}>
+                                        Commissions Page
+                                    </Button>
 
-                        <Box>
-                            <RequestForm />
-                        </Box>
-                    </Stack>
-                </CardBody>
-            </Card>
-        </ScaleFade>
+                                    <Button
+                                        onClick={_formGuideDisclosure.onOpen}
+                                    >
+                                        Form Guide
+                                    </Button>
+                                </Stack>
+                            </ButtonGroup>
+
+                            <Box>
+                                <RequestForm />
+                            </Box>
+                        </Stack>
+                    </CardBody>
+                </Card>
+            </ScaleFade>
+
+            <FormGuide
+                isOpen={_formGuideDisclosure.isOpen}
+                onClose={_formGuideDisclosure.onClose}
+            />
+        </>
     )
 }

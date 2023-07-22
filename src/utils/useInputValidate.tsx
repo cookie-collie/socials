@@ -1,10 +1,6 @@
 import { useState } from "react"
 
-interface props {
-    validationType?: "email"
-}
-
-export function useInputValidate({ validationType }: props) {
+export function useInputValidate(validationType: "email" | "none") {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
     const everthingRegex = /.*/
     const regex = validationType === "email" ? emailRegex : everthingRegex
