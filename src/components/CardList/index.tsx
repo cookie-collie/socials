@@ -1,3 +1,3 @@
 import { CardList, CardListProps } from "./CardList"
-export default CardList
+export { CardList }
 export type { CardListProps }

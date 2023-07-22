@@ -15,8 +15,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { FormGuide } from "../../fragments/FormGuide"
-import { RequestForm } from "../../fragments/RequestForm"
+import { FormGuide, RequestForm } from "../../fragments"
 
 export const CommissionForm = () => {
     const _info = [

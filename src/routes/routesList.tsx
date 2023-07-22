@@ -1,7 +1,4 @@
-import { AboutMe } from "../pages/AboutMe"
-import { Commission } from "../pages/Commission"
-import { CommissionForm } from "../pages/CommissionForm"
-import { MySocials } from "../pages/MySocials"
+import { AboutMe, Commission, CommissionForm, MySocials } from "../pages"
 
 export interface SingleRouteProps {
     path: string

@@ -8,18 +8,18 @@ import {
     Flex,
     Stack,
 } from "@chakra-ui/react"
-import { NavItem, NavbarItem, NavbarItemCompact } from "./NavItem"
+import { NavItem, NavItemProps, NavbarItemCompact } from "./NavItem"
 
 interface NavbarProps {
     onSelectItem?: (e: any) => void
     currentItem?: string
-    items?: NavbarItem[]
+    items?: NavItemProps[]
     homeSection?: React.ReactNode
     subSection?: React.ReactNode
 }
 
 export const Navbar = (props: NavbarProps) => {
-    const { currentItem, onSelectItem, items, homeSection, subSection } = props
+    const { currentItem, items, homeSection, subSection } = props
 
     return (
         <Stack

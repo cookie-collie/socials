@@ -22,11 +22,8 @@ import {
     useDisclosure,
 } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
-import { Pagination } from "../../components/Pagination"
-import { CommissionDetails } from "../../fragments/CommissionDetails"
-import { Extras } from "../../fragments/Extras"
-import PriceSheet from "../../fragments/PriceSheet"
-import TOS from "../../fragments/TOS"
+import { Pagination } from "../../components"
+import { CommissionDetails, Extras, PriceSheet, TOS } from "../../fragments"
 import { usePaginationLogic } from "../../utils/usePaginationLogic"
 import { useScrollToTop } from "../../utils/useScrollToTop"
 
