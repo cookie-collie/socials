@@ -16,9 +16,18 @@ import {
     Tooltip,
 } from "@chakra-ui/react"
 import { useState } from "react"
+import { sendRequestForm } from "../../api"
 import { useInputValidate, useStateCustom } from "../../utils"
 
-export const RequestForm = () => {
+interface RequestFormProps {
+    setSendStatus?: (status: string) => void
+    activateAlert?: () => void
+}
+
+export const RequestForm = ({
+    activateAlert,
+    setSendStatus,
+}: RequestFormProps) => {
     const _validateEmail = useInputValidate("email")
     const _validateRefLinks = useInputValidate("none")
 
@@ -35,6 +44,7 @@ export const RequestForm = () => {
     ]
 
     const [commType, setCommType] = useState(_commTypes[0])
+    const [isSent, setIsSent] = useState(false)
 
     const _handleCommTypeOnChange = (e: any) => {
         setCommType(e.target.value)
@@ -43,6 +53,7 @@ export const RequestForm = () => {
     }
 
     const _handleSubmit = (e: any) => {
+        setIsSent(true)
         e.preventDefault()
         const _formValue = {
             email: e.target.elements["email"].value,
@@ -55,7 +66,8 @@ export const RequestForm = () => {
             contacts: e.target.elements["contacts"].value,
             "extra-info": e.target.elements["extra-info"].value,
         }
-        console.log(_formValue)
+        sendRequestForm(_formValue, setSendStatus)
+        activateAlert?.()
     }
 
     return (
@@ -202,8 +214,10 @@ export const RequestForm = () => {
                             type="submit"
                             colorScheme="pink"
                             isDisabled={
-                                _validateEmail.isError ||
-                                _validateRefLinks.isError
+                                isSent
+                                    ? true
+                                    : _validateEmail.isError ||
+                                      _validateRefLinks.isError
                             }
                         >
                             Submit

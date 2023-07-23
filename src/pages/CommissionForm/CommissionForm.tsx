@@ -13,9 +13,9 @@ import {
     Stack,
     useDisclosure,
 } from "@chakra-ui/react"
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
-import { FormGuide, RequestForm } from "../../fragments"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { CustomAlert, FormGuide, RequestForm } from "../../fragments"
 
 export const CommissionForm = () => {
     const _info = [
@@ -35,12 +35,22 @@ export const CommissionForm = () => {
         </>,
     ]
 
+    const navigate = useNavigate()
+
     const _formGuideDisclosure = useDisclosure()
+    const _alertDisclosure = useDisclosure()
+
+    const [sendStatus, setSendStatus] = useState("")
 
     const _transition = useDisclosure()
     useEffect(() => {
         _transition.onToggle()
     }, [])
+
+    const _handleCloseAlert = () => {
+        _alertDisclosure.onClose()
+        navigate(0)
+    }
 
     return (
         <>
@@ -93,7 +103,10 @@ export const CommissionForm = () => {
                             </ButtonGroup>
 
                             <Box>
-                                <RequestForm />
+                                <RequestForm
+                                    activateAlert={_alertDisclosure.onOpen}
+                                    setSendStatus={setSendStatus}
+                                />
                             </Box>
                         </Stack>
                     </CardBody>
@@ -103,6 +116,12 @@ export const CommissionForm = () => {
             <FormGuide
                 isOpen={_formGuideDisclosure.isOpen}
                 onClose={_formGuideDisclosure.onClose}
+            />
+
+            <CustomAlert
+                isOpen={_alertDisclosure.isOpen}
+                onClose={_handleCloseAlert}
+                sendStatus={sendStatus}
             />
         </>
     )
