@@ -14,16 +14,18 @@ export function testSend(form: any) {
 
 export async function sendRequestForm(
     form: any,
+    CAPTCHAToken: string,
     setStatus?: (status: string) => void
 ) {
     return await axios
-        .post(`${DEV_URL}/api/request`, form)
+        .post(`${DEV_URL}/api/request`, {
+            form: form,
+            CAPTCHAToken: CAPTCHAToken,
+        })
         .then((res) => {
             setStatus?.("OK")
-            console.log(res)
         })
         .catch((error: AxiosError | Error) => {
             setStatus?.("Error")
-            console.log("Error: ", error.message)
         })
 }

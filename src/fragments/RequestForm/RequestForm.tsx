@@ -15,7 +15,8 @@ import {
     Textarea,
     Tooltip,
 } from "@chakra-ui/react"
-import { useState } from "react"
+import { useRef, useState } from "react"
+import ReCAPTCHA from "react-google-recaptcha"
 import { sendRequestForm } from "../../api"
 import { useInputValidate, useStateCustom } from "../../utils"
 
@@ -34,6 +35,7 @@ export const RequestForm = ({
     const _handleRadioValue = useStateCustom("No")
     const _detailedBgState = useStateCustom(false)
     const _additionalCharState = useStateCustom(false)
+    const _CAPTCHAToken = useStateCustom("")
 
     const _commTypes = [
         "Emotes",
@@ -66,9 +68,11 @@ export const RequestForm = ({
             contacts: e.target.elements["contacts"].value,
             "extra-info": e.target.elements["extra-info"].value,
         }
-        sendRequestForm(_formValue, setSendStatus)
+        sendRequestForm(_formValue, _CAPTCHAToken.value, setSendStatus)
         activateAlert?.()
     }
+
+    const reCAPTCHARef = useRef<ReCAPTCHA>(null)
 
     return (
         <form onSubmit={_handleSubmit}>
@@ -201,28 +205,41 @@ export const RequestForm = ({
                 </Box>
 
                 <Flex justify={"center"}>
-                    <Tooltip
-                        label="Please check all the fields again for errors"
-                        isDisabled={
-                            !(
-                                _validateEmail.isError ||
-                                _validateRefLinks.isError
-                            )
-                        }
-                    >
-                        <Button
-                            type="submit"
-                            colorScheme="pink"
+                    <Stack gap={6}>
+                        <ReCAPTCHA
+                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
+                            ref={reCAPTCHARef}
+                            onChange={() =>
+                                _CAPTCHAToken.setValue(
+                                    reCAPTCHARef.current?.getValue()
+                                )
+                            }
+                        />
+
+                        <Tooltip
+                            label="Please check all the fields again for errors"
                             isDisabled={
-                                isSent
-                                    ? true
-                                    : _validateEmail.isError ||
-                                      _validateRefLinks.isError
+                                !(
+                                    _validateEmail.isError ||
+                                    _validateRefLinks.isError ||
+                                    _CAPTCHAToken.value === ""
+                                )
                             }
                         >
-                            Submit
-                        </Button>
-                    </Tooltip>
+                            <Button
+                                type="submit"
+                                colorScheme="pink"
+                                isDisabled={
+                                    _validateEmail.isError ||
+                                    _validateRefLinks.isError ||
+                                    _CAPTCHAToken.value === "" ||
+                                    isSent
+                                }
+                            >
+                                Submit
+                            </Button>
+                        </Tooltip>
+                    </Stack>
                 </Flex>
             </Stack>
         </form>
