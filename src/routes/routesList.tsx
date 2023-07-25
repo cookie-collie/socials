@@ -1,4 +1,10 @@
-import { AboutMe, Commission, CommissionForm, MySocials } from "../pages"
+import {
+    AboutMe,
+    Commission,
+    CommissionForm,
+    Gallery,
+    MySocials,
+} from "../pages"
 
 export interface SingleRouteProps {
     path: string
@@ -7,7 +13,7 @@ export interface SingleRouteProps {
 
 export const routesList: SingleRouteProps[] = [
     {
-        path: "about-me",
+        path: "",
         element: <AboutMe />,
     },
 
@@ -24,5 +30,10 @@ export const routesList: SingleRouteProps[] = [
     {
         path: "comm-form",
         element: <CommissionForm />,
+    },
+
+    {
+        path: "gallery",
+        element: <Gallery />,
     },
 ]

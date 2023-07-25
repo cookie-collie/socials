@@ -8,6 +8,7 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
+    Flex,
     Icon,
     Stack,
     Text,
@@ -15,7 +16,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { AiFillHome, AiOutlineInfo } from "react-icons/ai"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { FAB, Navbar } from "../components"
 import { NavItemProps } from "../components/Navbar"
 import { AboutWebsite } from "../fragments"
@@ -23,7 +24,7 @@ import { CustomRoutes } from "../routes"
 
 export const MainLayout = () => {
     const items: NavItemProps[] = [
-        { label: "About Me", id: "about-me" },
+        { label: "Gallery", id: "gallery" },
         { label: "My socials", id: "socials" },
         { label: "Commissions", id: "commissions" },
         { label: "Commission Form", id: "comm-form" },
@@ -75,13 +76,23 @@ export const MainLayout = () => {
                 <Box fontWeight={"bold"} color={"pink.500"}>
                     <Navbar
                         items={items}
-                        homeSection={<Icon as={AiFillHome} boxSize={6} />}
+                        homeSection={
+                            <Flex as={Link} to={"/"}>
+                                <Icon as={AiFillHome} boxSize={5} />
+                            </Flex>
+                        }
                         currentItem={currentItem}
                     />
                 </Box>
 
                 {/* Body area */}
-                <Box px={{ base: "8", md: "8", lg: "32" }} py={12} flex={1}>
+                <Box
+                    px={{ base: "8", md: "8", lg: "32" }}
+                    py={12}
+                    flex={1}
+                    color={"blackAlpha.700"}
+                    fontSize={"xl"}
+                >
                     <CustomRoutes />
                 </Box>
 

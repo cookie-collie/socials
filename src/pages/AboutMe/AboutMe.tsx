@@ -66,7 +66,7 @@ export const AboutMe = () => {
                                     feel free to use the bar on the top!
                                 </Text>
 
-                                <Text as={"i"}>
+                                <Text as={"i"} fontSize={"sm"}>
                                     &larr; Artwork by{" "}
                                     <Link
                                         href="https://twitter.com/InformalScout"
