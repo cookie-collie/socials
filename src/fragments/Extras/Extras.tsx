@@ -8,15 +8,36 @@ import {
     ListItem,
     Text,
 } from "@chakra-ui/react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface ExtrasProps {
     setMaxPage?: (page: number) => void
 }
 
+interface FetchObject {
+    Extras: ContentObject
+}
+
+interface ContentObject {
+    background: string[]
+    others: string[]
+}
+
 export const Extras = ({ setMaxPage }: ExtrasProps) => {
+    const [_bgItems, _setBgItems] = useState<string[]>([])
+    const [_otherItems, _setOtherItems] = useState<string[]>([])
+    const [_isFetched, _setIsFetched] = useState<boolean>(false)
+
     useEffect(() => {
         setMaxPage?.(1)
+
+        fetch("resources/jsons/texts.json")
+            .then((res) => res.json())
+            .then((data: FetchObject) => {
+                _setBgItems(data.Extras.background)
+                _setOtherItems(data.Extras.others)
+                _setIsFetched(true)
+            })
     }, [])
 
     return (
@@ -34,13 +55,15 @@ export const Extras = ({ setMaxPage }: ExtrasProps) => {
 
                 <AccordionPanel>
                     <List>
-                        <ListItem>
-                            <Text>Simple background: $0</Text>
-                        </ListItem>
-
-                        <ListItem>
-                            <Text>Detailed background: 5$</Text>
-                        </ListItem>
+                        {_isFetched && (
+                            <>
+                                {_bgItems.map((item, i) => (
+                                    <ListItem key={"bg-item-" + i}>
+                                        <Text>{item}</Text>
+                                    </ListItem>
+                                ))}
+                            </>
+                        )}
                     </List>
                 </AccordionPanel>
             </AccordionItem>
@@ -52,7 +75,17 @@ export const Extras = ({ setMaxPage }: ExtrasProps) => {
                 </AccordionButton>
 
                 <AccordionPanel>
-                    <Text>Change request after approval: $5</Text>
+                    <List>
+                        {_isFetched && (
+                            <>
+                                {_otherItems.map((item, i) => (
+                                    <ListItem key={"bg-item-" + i}>
+                                        <Text>{item}</Text>
+                                    </ListItem>
+                                ))}
+                            </>
+                        )}
+                    </List>
                 </AccordionPanel>
             </AccordionItem>
         </Accordion>

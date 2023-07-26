@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     ButtonGroup,
     Card,
@@ -17,12 +18,28 @@ import { useEffect, useState } from "react"
 
 import { FaTwitch, FaTwitter } from "react-icons/fa"
 
+interface FetchObject {
+    AboutMe: {
+        content: string[]
+    }
+}
+
 export const AboutMe = () => {
     const [isLoaded, setIsLoaded] = useState(false)
     const _scaleFadeDisclosure = useDisclosure()
 
+    const [_isFetched, _setIsFetched] = useState<boolean>(false)
+    const [_fetchedData, _setFetchedData] = useState<string[]>([])
+
     useEffect(() => {
         _scaleFadeDisclosure.onToggle()
+
+        fetch("resources/jsons/texts.json")
+            .then((res) => res.json())
+            .then((data: FetchObject) => {
+                _setFetchedData(data.AboutMe.content)
+                _setIsFetched(true)
+            })
     }, [])
 
     return (
@@ -51,20 +68,19 @@ export const AboutMe = () => {
                                     Hi there! I&apos;m Cookie, nice to meet ya!
                                 </Heading>
 
-                                <Text fontSize={"xl"}>
-                                    Welcome to my page! My name is Cookie and
-                                    I&apos;m a part deer, part collie doggo who
-                                    loves to draw. Other than that, I&apos;m a
-                                    part-time doggo on Twitch, too!
-                                </Text>
-
-                                <Text fontSize={"xl"}>
-                                    Feel free to navigate the site however you
-                                    want! You can click on the links below to
-                                    visit my Twitter and Twitch. If you want to
-                                    know more about my commissions and arts,
-                                    feel free to use the bar on the top!
-                                </Text>
+                                {_isFetched ? (
+                                    <>
+                                        {_fetchedData.map((item, i) => (
+                                            <Text key={"item-" + i}>
+                                                {item}
+                                            </Text>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <Skeleton>
+                                        <Box minH={60} />
+                                    </Skeleton>
+                                )}
 
                                 <Text as={"i"} fontSize={"sm"}>
                                     &larr; Artwork by{" "}

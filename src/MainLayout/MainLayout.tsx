@@ -21,6 +21,7 @@ import { FAB, Navbar } from "../components"
 import { NavItemProps } from "../components/Navbar"
 import { AboutWebsite } from "../fragments"
 import { CustomRoutes } from "../routes"
+import { useStateCustom } from "../utils"
 
 export const MainLayout = () => {
     const items: NavItemProps[] = [
@@ -35,15 +36,22 @@ export const MainLayout = () => {
         _path.pathname.replace("/", "")
     )
 
+    const _texts = useStateCustom({})
+    const _fetchIsDone = useStateCustom(false)
+
     useEffect(() => {
         setCurrentItem(_path.pathname.replace("/", ""))
+
+        fetch("resources/jsons/texts.json")
+            .then((res) => res.json())
+            .then((data) => _texts.setValue(data))
+            .then(() => _fetchIsDone.setValue(true))
     }, [_path])
 
     const _drawerDisclosure = useDisclosure()
 
     return (
         <>
-            {/* About this website drawer */}
             <Drawer
                 placement="right"
                 onClose={_drawerDisclosure.onClose}

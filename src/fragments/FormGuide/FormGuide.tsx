@@ -1,4 +1,5 @@
 import {
+    Box,
     Heading,
     List,
     ListIcon,
@@ -12,50 +13,38 @@ import {
     ModalProps,
     Stack,
 } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 import { MdCookie } from "react-icons/md"
+
+interface FetchObject {
+    FormGuide: ContentObject
+}
+
+interface ContentObject {
+    guidelines: GuidelineObject[]
+}
+
+interface GuidelineObject {
+    field: string
+    content: string
+}
 
 export const FormGuide = ({
     isOpen,
     onClose,
 }: Omit<ModalProps, "children">) => {
-    const _guidelines = [
-        <>
-            <b>Email: </b>Your email. I will use this to reply if your form is
-            accepted or not, and to send you the finished drawing.
-        </>,
+    const [_guidelines, _setGuidelines] = useState<GuidelineObject[]>([])
+    const [_isFetched, _setIsFetched] = useState<boolean>(false)
 
-        <>
-            <b>Name: </b>What you want me to call you.
-        </>,
+    useEffect(() => {
+        fetch("resources/jsons/texts.json")
+            .then((res) => res.json())
+            .then((data: FetchObject) => {
+                _setGuidelines(data.FormGuide.guidelines)
+                _setIsFetched(true)
+            })
+    }, [])
 
-        <>
-            <b>Commission type: </b>The type of commission you want. Please
-            refer to the Commissions page for the price and description.
-        </>,
-
-        <>
-            <b>Reference sheet links: </b>The links to the reference sheets of
-            your characters. Please provide at least one reference per
-            character.
-        </>,
-
-        <>
-            <b>Secret commission?: </b>Mark your commission as a secret one or
-            not, based on the selection. Secret commission will only be sent to
-            you when it is finished.
-        </>,
-
-        <>
-            <b>Other means of contact: </b>Other places that I can contact you,
-            e.g. Discord, Twitter,...
-        </>,
-
-        <>
-            <b>Extra information: </b>Other things that you want to provide me
-            about the commission, e.g. pose idea, background idea,... Or if you
-            want to leave me a nice message, that is okay too!
-        </>,
-    ]
     return (
         <Modal
             isOpen={isOpen}
@@ -103,14 +92,19 @@ export const FormGuide = ({
                         </Heading>
 
                         <List spacing={4}>
-                            {_guidelines.map((item, i) => (
-                                <ListItem key={"item-" + i}>
-                                    <ListIcon>
-                                        <MdCookie />
-                                    </ListIcon>
-                                    {item}
-                                </ListItem>
-                            ))}
+                            {_isFetched ? (
+                                _guidelines.map((item, i) => (
+                                    <ListItem key={"item-" + i}>
+                                        <ListIcon>
+                                            <MdCookie />
+                                        </ListIcon>
+                                        <b>{item.field}</b>
+                                        {item.content}
+                                    </ListItem>
+                                ))
+                            ) : (
+                                <Box minH={60} />
+                            )}
                         </List>
                     </Stack>
                 </ModalBody>
