@@ -6,10 +6,16 @@ import { LastPage } from "./LastPage"
 interface CommDetailsProps {
     currentPage?: number
     setMaxPage?: (page: number) => void
+    fetchedContent: {
+        details: string[]
+        paymentProcess: string[]
+        willDraw: string[]
+        willNotDraw: string[]
+    }
 }
 
 export const CommissionDetails = (props: CommDetailsProps) => {
-    const { currentPage = 1, setMaxPage } = props
+    const { currentPage = 1, setMaxPage, fetchedContent } = props
 
     useEffect(() => {
         setMaxPage?.(3)
@@ -33,11 +39,16 @@ export const CommissionDetails = (props: CommDetailsProps) => {
             </Heading>
 
             {currentPage === 1 ? (
-                <FirstTwoPage pageName="comm-details" />
+                <FirstTwoPage fetchedContent={fetchedContent.details} />
             ) : currentPage === 2 ? (
-                <FirstTwoPage pageName="payment-process" />
+                <FirstTwoPage fetchedContent={fetchedContent.paymentProcess} />
             ) : (
-                <LastPage />
+                <LastPage
+                    fetchedContent={{
+                        willDraw: fetchedContent.willDraw,
+                        willNotDraw: fetchedContent.willNotDraw,
+                    }}
+                />
             )}
         </Stack>
     )

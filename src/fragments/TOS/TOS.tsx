@@ -1,36 +1,18 @@
-import { Box, Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+import { Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react"
+import { useEffect } from "react"
 import { MdCookie } from "react-icons/md"
 
 interface TOSProps {
     currentPage?: number
     setMaxPage?: (page: number) => void
-}
-
-interface FetchObject {
-    TOS: {
-        tos: string[]
-        importants: string[]
-    }
+    fetchedContent: { importants: string[]; tos: string[] }
 }
 
 export const TOS = (props: TOSProps) => {
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-    const [_fetchedData, _setFetchedData] = useState<FetchObject>({
-        TOS: { tos: [], importants: [] },
-    })
-
-    const { currentPage = 1, setMaxPage } = props
+    const { currentPage = 1, setMaxPage, fetchedContent } = props
 
     useEffect(() => {
         setMaxPage?.(2)
-
-        fetch("resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchObject) => {
-                _setFetchedData(data)
-                _setIsFetched(true)
-            })
     }, [])
 
     return (
@@ -57,32 +39,28 @@ export const TOS = (props: TOSProps) => {
             </Heading>
 
             <List spacing={4}>
-                {_isFetched ? (
-                    currentPage === 1 ? (
-                        <>
-                            {_fetchedData.TOS.tos.map((item, i) => (
-                                <ListItem key={"tos-" + i}>
-                                    <ListIcon>
-                                        <MdCookie />
-                                    </ListIcon>
-                                    {item}
-                                </ListItem>
-                            ))}
-                        </>
-                    ) : (
-                        <>
-                            {_fetchedData.TOS.importants.map((item, i) => (
-                                <ListItem key={"importants-" + i}>
-                                    <ListIcon>
-                                        <MdCookie />
-                                    </ListIcon>
-                                    {item}
-                                </ListItem>
-                            ))}
-                        </>
-                    )
+                {currentPage === 1 ? (
+                    <>
+                        {fetchedContent.tos.map((item, i) => (
+                            <ListItem key={"tos-" + i}>
+                                <ListIcon>
+                                    <MdCookie />
+                                </ListIcon>
+                                {item}
+                            </ListItem>
+                        ))}
+                    </>
                 ) : (
-                    <Box minH={60} />
+                    <>
+                        {fetchedContent.importants.map((item, i) => (
+                            <ListItem key={"importants-" + i}>
+                                <ListIcon>
+                                    <MdCookie />
+                                </ListIcon>
+                                {item}
+                            </ListItem>
+                        ))}
+                    </>
                 )}
             </List>
 

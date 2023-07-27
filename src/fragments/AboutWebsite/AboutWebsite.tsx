@@ -17,33 +17,38 @@ import { FaExternalLinkAlt } from "react-icons/fa"
 import { MdCookie } from "react-icons/md"
 
 interface FetchedObject {
-    AboutWebsite: AboutWebsiteContent
-}
-
-interface AboutWebsiteContent {
-    items: string[]
-    references: ReferencesObject[]
-}
-
-interface ReferencesObject {
-    href: string
-    title: string
-    key: string
+    AboutWebsite: {
+        items: string[]
+        references: {
+            href: string
+            title: string
+            key: string
+        }[]
+    }
 }
 
 export const AboutWebsite = () => {
-    const [_listItem, _setListItem] = useState<string[]>([])
-    const [_references, _setReferences] = useState<ReferencesObject[]>([])
+    const [_fetchedData, _setFetchedData] = useState<FetchedObject>({
+        AboutWebsite: {
+            items: [],
+            references: [
+                {
+                    href: "",
+                    key: "",
+                    title: "",
+                },
+            ],
+        },
+    })
     const [_isFetched, _setIsFetched] = useState<boolean>(false)
 
     useEffect(() => {
         fetch("resources/jsons/texts.json")
             .then((res) => res.json())
             .then((data: FetchedObject) => {
-                _setListItem(data.AboutWebsite.items)
-                _setReferences(data.AboutWebsite.references)
+                _setFetchedData(data)
+                _setIsFetched(true)
             })
-            .then(() => _setIsFetched(true))
     }, [])
 
     return (
@@ -65,14 +70,16 @@ export const AboutWebsite = () => {
                     <List>
                         {_isFetched && (
                             <>
-                                {_listItem.map((item, i) => (
-                                    <ListItem key={"item-" + i}>
-                                        <ListIcon>
-                                            <MdCookie />
-                                        </ListIcon>
-                                        {item}
-                                    </ListItem>
-                                ))}
+                                {_fetchedData.AboutWebsite.items.map(
+                                    (item, i) => (
+                                        <ListItem key={"item-" + i}>
+                                            <ListIcon>
+                                                <MdCookie />
+                                            </ListIcon>
+                                            {item}
+                                        </ListItem>
+                                    )
+                                )}
                             </>
                         )}
                     </List>
@@ -96,24 +103,26 @@ export const AboutWebsite = () => {
                     <List>
                         {_isFetched && (
                             <>
-                                {_references.map((item) => (
-                                    <ListItem key={item.key}>
-                                        <ListIcon>
-                                            <MdCookie />
-                                        </ListIcon>
-                                        <Link
-                                            href={item.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            {item.title}
-                                        </Link>
-                                        &nbsp;
-                                        <ListIcon>
-                                            <FaExternalLinkAlt />
-                                        </ListIcon>
-                                    </ListItem>
-                                ))}
+                                {_fetchedData.AboutWebsite.references.map(
+                                    (item) => (
+                                        <ListItem key={item.key}>
+                                            <ListIcon>
+                                                <MdCookie />
+                                            </ListIcon>
+                                            <Link
+                                                href={item.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {item.title}
+                                            </Link>
+                                            &nbsp;
+                                            <ListIcon>
+                                                <FaExternalLinkAlt />
+                                            </ListIcon>
+                                        </ListItem>
+                                    )
+                                )}
                             </>
                         )}
                     </List>

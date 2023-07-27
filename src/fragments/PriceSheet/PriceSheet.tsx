@@ -1,57 +1,30 @@
-import { Box, List, ListIcon, ListItem, SimpleGrid } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+import { List, ListIcon, ListItem, SimpleGrid } from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
 import { CardList } from "../../components"
 import { CustomCardProps } from "../../components/PriceCard"
 
 interface FetchObject {
-    PriceSheet: {
-        description: {
-            emotes: string[]
-            allBody: string[]
-            refSheet: string[]
-            plushPhoneBG: string[]
+    fetchedData: {
+        PriceSheet: {
+            description: {
+                emotes: string[]
+                allBody: string[]
+                refSheet: string[]
+                plushPhoneBG: string[]
+            }
         }
-    }
 
-    ImgLinks: {
-        halfBody: string[]
-        fullBody: string[]
-        emotes: string[]
-        plushPhoneBG: string[]
-        refSheet: string[]
+        ImgLinks: {
+            halfBody: string[]
+            fullBody: string[]
+            emotes: string[]
+            plushPhoneBG: string[]
+            refSheet: string[]
+        }
     }
 }
 
-export const PriceSheet = () => {
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-    const [_fetchedData, _setFetchedData] = useState<FetchObject>({
-        PriceSheet: {
-            description: {
-                allBody: [],
-                emotes: [],
-                plushPhoneBG: [],
-                refSheet: [],
-            },
-        },
-        ImgLinks: {
-            emotes: [],
-            fullBody: [],
-            halfBody: [],
-            plushPhoneBG: [],
-            refSheet: [],
-        },
-    })
-
-    useEffect(() => {
-        fetch("resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchObject) => {
-                _setFetchedData(data)
-                _setIsFetched(true)
-            })
-    }, [])
-
+export const PriceSheet = ({ fetchedData }: FetchObject) => {
     const _renderBodyList = (list: string[]) => {
         return (
             <List spacing={4}>
@@ -70,8 +43,8 @@ export const PriceSheet = () => {
     const _commCard: CustomCardProps[] = [
         {
             heading: "Emotes",
-            body: _renderBodyList(_fetchedData.PriceSheet.description.emotes),
-            coverImgUrl: _fetchedData.ImgLinks.emotes[0],
+            body: _renderBodyList(fetchedData.PriceSheet.description.emotes),
+            coverImgUrl: fetchedData.ImgLinks.emotes[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32923",
             price: "$10",
             id: "card-emotes",
@@ -79,8 +52,8 @@ export const PriceSheet = () => {
 
         {
             heading: "Half Body",
-            body: _renderBodyList(_fetchedData.PriceSheet.description.allBody),
-            coverImgUrl: _fetchedData.ImgLinks.halfBody[0],
+            body: _renderBodyList(fetchedData.PriceSheet.description.allBody),
+            coverImgUrl: fetchedData.ImgLinks.halfBody[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32921",
             price: "$25+",
             additionalInfo: <>Detailed background: +$5</>,
@@ -89,8 +62,8 @@ export const PriceSheet = () => {
 
         {
             heading: "Full Body",
-            body: _renderBodyList(_fetchedData.PriceSheet.description.allBody),
-            coverImgUrl: _fetchedData.ImgLinks.fullBody[0],
+            body: _renderBodyList(fetchedData.PriceSheet.description.allBody),
+            coverImgUrl: fetchedData.ImgLinks.fullBody[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32922",
             price: "$35+",
             additionalInfo: (
@@ -105,8 +78,8 @@ export const PriceSheet = () => {
 
         {
             heading: "Reference Sheet",
-            body: _renderBodyList(_fetchedData.PriceSheet.description.refSheet),
-            coverImgUrl: _fetchedData.ImgLinks.refSheet[0],
+            body: _renderBodyList(fetchedData.PriceSheet.description.refSheet),
+            coverImgUrl: fetchedData.ImgLinks.refSheet[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32925",
             price: "$50",
             id: "card-ref-sheet",
@@ -115,9 +88,9 @@ export const PriceSheet = () => {
         {
             heading: "Plush Phone Wallpaper",
             body: _renderBodyList(
-                _fetchedData.PriceSheet.description.plushPhoneBG
+                fetchedData.PriceSheet.description.plushPhoneBG
             ),
-            coverImgUrl: _fetchedData.ImgLinks.plushPhoneBG[0],
+            coverImgUrl: fetchedData.ImgLinks.plushPhoneBG[0],
             linkTo: "https://itaku.ee/profile/cookiecollie/gallery/32924",
             price: "$25",
             id: "card-plush-bg",
@@ -131,11 +104,7 @@ export const PriceSheet = () => {
             color={"blackAlpha.700"}
             fontSize={"lg"}
         >
-            {_isFetched ? (
-                <CardList cardContent={_commCard} variant={"outline"} />
-            ) : (
-                <Box minH={60} />
-            )}
+            <CardList cardContent={_commCard} variant={"outline"} />
         </SimpleGrid>
     )
 }
