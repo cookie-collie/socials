@@ -77,7 +77,7 @@ export const Navbar = (props: NavbarProps) => {
                         <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel>
-                        <Stack>
+                        <Stack gap={4}>
                             {items?.map((item) => (
                                 <NavbarItemCompact
                                     key={item.id}

@@ -34,7 +34,7 @@ export const AboutMe = () => {
     useEffect(() => {
         _scaleFadeDisclosure.onToggle()
 
-        fetch("resources/jsons/texts.json")
+        fetch(process.env.PUBLIC_URL + "/resources/jsons/texts.json")
             .then((res) => res.json())
             .then((data: FetchObject) => {
                 _setFetchedData(data.AboutMe.content)
