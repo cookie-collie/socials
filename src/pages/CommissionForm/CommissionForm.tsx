@@ -17,22 +17,22 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { CustomAlert, FormGuide, RequestForm } from "../../fragments"
 
+interface FetchObject {
+    FormGuide: {
+        guidelines: {
+            field: string
+            content: string
+        }[]
+    }
+}
+
 export const CommissionForm = () => {
     const _info = [
-        <>
-            Ready to have a drawing made by me? Go ahead and fill out the form
-            below!
-        </>,
+        "Ready to have a drawing made by me? Go ahead and fill out the form below!",
 
-        <>
-            Be sure to read the TOS and my price sheet carefully before
-            proceeding!
-        </>,
+        "Be sure to read the TOS and my price sheet carefully before proceeding!",
 
-        <>
-            Click the button below to visit the Commissions page to take a look
-            at my TOS and everything else if you haven&apos;t
-        </>,
+        "Click the button below to visit the Commissions page to take a look at my TOS and everything else if you haven't.",
     ]
 
     const navigate = useNavigate()
@@ -43,8 +43,21 @@ export const CommissionForm = () => {
     const [sendStatus, setSendStatus] = useState("")
 
     const _transition = useDisclosure()
+
+    const [_isFetched, _setIsFetched] = useState<boolean>(false)
+    const [_fetchedData, _setFetchedData] = useState<FetchObject>({
+        FormGuide: { guidelines: [{ field: "", content: "" }] },
+    })
+
     useEffect(() => {
         _transition.onToggle()
+
+        fetch("resources/jsons/texts.json")
+            .then((res) => res.json())
+            .then((data: FetchObject) => {
+                _setFetchedData(data)
+                _setIsFetched(true)
+            })
     }, [])
 
     const _handleCloseAlert = () => {
@@ -116,6 +129,7 @@ export const CommissionForm = () => {
             <FormGuide
                 isOpen={_formGuideDisclosure.isOpen}
                 onClose={_formGuideDisclosure.onClose}
+                fetchedContent={_fetchedData.FormGuide}
             />
 
             <CustomAlert

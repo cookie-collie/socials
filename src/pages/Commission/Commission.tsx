@@ -5,27 +5,54 @@ import {
     Card,
     CardBody,
     CardHeader,
+    Center,
     Divider,
     Heading,
     List,
     ListItem,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     ScaleFade,
     Stack,
     Text,
     useDisclosure,
 } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
-import { Pagination } from "../../components"
+import { CustomModal, Pagination } from "../../components"
 import { CommissionDetails, Extras, PriceSheet, TOS } from "../../fragments"
 import { usePaginationLogic } from "../../utils/usePaginationLogic"
 import { useScrollToTop } from "../../utils/useScrollToTop"
+
+interface FetchObject {
+    TOS: {
+        tos: string[]
+        importants: string[]
+    }
+    CommissionDetails: {
+        details: string[]
+        paymentProcess: string[]
+        willDraw: string[]
+        willNotDraw: string[]
+    }
+    Extras: {
+        background: string[]
+        others: string[]
+    }
+    PriceSheet: {
+        description: {
+            emotes: string[]
+            allBody: string[]
+            refSheet: string[]
+            plushPhoneBG: string[]
+        }
+    }
+
+    ImgLinks: {
+        halfBody: string[]
+        fullBody: string[]
+        emotes: string[]
+        plushPhoneBG: string[]
+        refSheet: string[]
+    }
+}
 
 export const Commission = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -46,81 +73,57 @@ export const Commission = () => {
     }
 
     const _transition = useDisclosure()
+
+    const [_fetchedData, _setFetchedData] = useState<FetchObject>({
+        CommissionDetails: {
+            details: [],
+            paymentProcess: [],
+            willDraw: [],
+            willNotDraw: [],
+        },
+
+        TOS: {
+            importants: [],
+            tos: [],
+        },
+
+        Extras: {
+            background: [],
+            others: [],
+        },
+
+        PriceSheet: {
+            description: {
+                emotes: [],
+                allBody: [],
+                plushPhoneBG: [],
+                refSheet: [],
+            },
+        },
+
+        ImgLinks: {
+            emotes: [],
+            fullBody: [],
+            halfBody: [],
+            plushPhoneBG: [],
+            refSheet: [],
+        },
+    })
+    const [_isFetched, _setIsFetched] = useState<boolean>(false)
+
     useEffect(() => {
         _transition.onToggle()
+
+        fetch("resources/jsons/texts.json")
+            .then((res) => res.json())
+            .then((data: FetchObject) => {
+                _setFetchedData(data)
+                _setIsFetched(true)
+            })
     }, [])
 
     return (
         <ScaleFade in={_transition.isOpen} delay={0.3}>
-            <Modal
-                isOpen={isOpen}
-                onClose={onClose}
-                scrollBehavior="inside"
-                size={"3xl"}
-            >
-                <ModalOverlay />
-
-                <ModalContent
-                    fontFamily={"Fredoka, Comfortaa, Arial"}
-                    overflow={"hidden"}
-                >
-                    <ModalCloseButton
-                        borderRadius={"full"}
-                        color={"whiteAlpha.900"}
-                    />
-
-                    <ModalHeader
-                        backgroundColor={"pink.400"}
-                        borderBottomRadius={"2xl"}
-                    >
-                        <Heading
-                            fontFamily={"Fredoka, Comfortaa, Arial"}
-                            size={"xl"}
-                            color={"whiteAlpha.900"}
-                            textAlign={"center"}
-                        >
-                            {modalInnerComp === "tos"
-                                ? "Terms of Service"
-                                : modalInnerComp === "details"
-                                ? "Commission Details"
-                                : modalInnerComp === "extras"
-                                ? "Extras and Fees"
-                                : ""}
-                        </Heading>
-                    </ModalHeader>
-
-                    <ModalBody py={8} ref={_modalBodyRef}>
-                        {modalInnerComp === "tos" ? (
-                            <TOS
-                                currentPage={currentPage}
-                                setMaxPage={setMaxPage}
-                            />
-                        ) : modalInnerComp === "details" ? (
-                            <CommissionDetails
-                                currentPage={currentPage}
-                                setMaxPage={setMaxPage}
-                            />
-                        ) : modalInnerComp === "extras" ? (
-                            <Extras setMaxPage={setMaxPage} />
-                        ) : (
-                            <></>
-                        )}
-                    </ModalBody>
-
-                    <ModalFooter justifyContent={"center"}>
-                        <Box>
-                            <Pagination
-                                maxPage={maxPage}
-                                currentPage={currentPage}
-                                setPageCallback={setCurrentPage}
-                                onNext={_scrollToTop}
-                                onPrevious={_scrollToTop}
-                            />
-                        </Box>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-
             <Stack gap={8} color={"blackAlpha.700"}>
                 <Box>
                     <Card
@@ -139,7 +142,9 @@ export const Commission = () => {
                                 My Commissions
                             </Heading>
                         </CardHeader>
+
                         <Divider />
+
                         <CardBody>
                             <Stack
                                 fontSize={"xl"}
@@ -201,9 +206,62 @@ export const Commission = () => {
                 </Box>
 
                 <Box>
-                    <PriceSheet />
+                    {_isFetched && (
+                        <PriceSheet
+                            fetchedData={{
+                                ImgLinks: _fetchedData.ImgLinks,
+                                PriceSheet: _fetchedData.PriceSheet,
+                            }}
+                        />
+                    )}
                 </Box>
             </Stack>
+
+            {_isFetched && (
+                <CustomModal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    bodyRef={_modalBodyRef}
+                    header={
+                        modalInnerComp === "tos"
+                            ? "Terms of Service"
+                            : modalInnerComp === "details"
+                            ? "Commission Details"
+                            : "Extras and Fees"
+                    }
+                    body={
+                        modalInnerComp === "tos" ? (
+                            <TOS
+                                currentPage={currentPage}
+                                setMaxPage={setMaxPage}
+                                fetchedContent={_fetchedData.TOS}
+                            />
+                        ) : modalInnerComp === "details" ? (
+                            <CommissionDetails
+                                currentPage={currentPage}
+                                setMaxPage={setMaxPage}
+                                fetchedContent={_fetchedData.CommissionDetails}
+                            />
+                        ) : (
+                            <Extras
+                                setMaxPage={setMaxPage}
+                                fetchedContent={_fetchedData.Extras}
+                            />
+                        )
+                    }
+                    footer={
+                        <Center flexGrow={1}>
+                            <Pagination
+                                maxPage={maxPage}
+                                currentPage={currentPage}
+                                setPageCallback={setCurrentPage}
+                                onNext={_scrollToTop}
+                                onPrevious={_scrollToTop}
+                            />
+                        </Center>
+                    }
+                />
+            )}
         </ScaleFade>
     )
 }

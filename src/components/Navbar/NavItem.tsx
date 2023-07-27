@@ -32,7 +32,7 @@ export const NavItem = (props: NavItemProps) => {
     }
 
     return (
-        <Box as={Link} to={"/" + id}>
+        <Box as={Link} to={"/" + id} whiteSpace={"nowrap"}>
             <motion.div
                 variants={_navItemVariants}
                 whileHover={"hover"}
@@ -99,15 +99,29 @@ export const NavbarItemCompact = (props: NavItemProps) => {
             position={"relative"}
         >
             <motion.div whileHover={"hover"} whileTap={"tap"}>
-                <motion.div variants={_navItemLabelVariants}>
-                    <Text
-                        as={Link}
-                        to={"/" + id}
-                        color={isActive ? "pink.500" : "inherit"}
+                <Flex gap={2} whiteSpace={"nowrap"}>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: isActive ? 1 : 0 }}
+                        variants={_navItemLabelVariants}
                     >
-                        {label}
-                    </Text>
-                </motion.div>
+                        <Text>{">"}</Text>
+                    </motion.div>
+
+                    <motion.div variants={_navItemLabelVariants}>
+                        <Text as={Link} to={"/" + id}>
+                            {label}
+                        </Text>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: isActive ? 1 : 0 }}
+                        variants={_navItemLabelVariants}
+                    >
+                        <Text>{"<"}</Text>
+                    </motion.div>
+                </Flex>
             </motion.div>
         </Flex>
     )

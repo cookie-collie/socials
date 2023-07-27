@@ -8,36 +8,19 @@ import {
     ListItem,
     Text,
 } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 interface ExtrasProps {
     setMaxPage?: (page: number) => void
+    fetchedContent: {
+        background: string[]
+        others: string[]
+    }
 }
 
-interface FetchObject {
-    Extras: ContentObject
-}
-
-interface ContentObject {
-    background: string[]
-    others: string[]
-}
-
-export const Extras = ({ setMaxPage }: ExtrasProps) => {
-    const [_bgItems, _setBgItems] = useState<string[]>([])
-    const [_otherItems, _setOtherItems] = useState<string[]>([])
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-
+export const Extras = ({ setMaxPage, fetchedContent }: ExtrasProps) => {
     useEffect(() => {
         setMaxPage?.(1)
-
-        fetch("resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchObject) => {
-                _setBgItems(data.Extras.background)
-                _setOtherItems(data.Extras.others)
-                _setIsFetched(true)
-            })
     }, [])
 
     return (
@@ -55,15 +38,11 @@ export const Extras = ({ setMaxPage }: ExtrasProps) => {
 
                 <AccordionPanel>
                     <List>
-                        {_isFetched && (
-                            <>
-                                {_bgItems.map((item, i) => (
-                                    <ListItem key={"bg-item-" + i}>
-                                        <Text>{item}</Text>
-                                    </ListItem>
-                                ))}
-                            </>
-                        )}
+                        {fetchedContent.background.map((item, i) => (
+                            <ListItem key={"bg-item-" + i}>
+                                <Text>{item}</Text>
+                            </ListItem>
+                        ))}
                     </List>
                 </AccordionPanel>
             </AccordionItem>
@@ -76,15 +55,11 @@ export const Extras = ({ setMaxPage }: ExtrasProps) => {
 
                 <AccordionPanel>
                     <List>
-                        {_isFetched && (
-                            <>
-                                {_otherItems.map((item, i) => (
-                                    <ListItem key={"bg-item-" + i}>
-                                        <Text>{item}</Text>
-                                    </ListItem>
-                                ))}
-                            </>
-                        )}
+                        {fetchedContent.others.map((item, i) => (
+                            <ListItem key={"bg-item-" + i}>
+                                <Text>{item}</Text>
+                            </ListItem>
+                        ))}
                     </List>
                 </AccordionPanel>
             </AccordionItem>
