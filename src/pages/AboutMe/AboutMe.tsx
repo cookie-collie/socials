@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     ButtonGroup,
     Card,
@@ -17,29 +16,18 @@ import {
 import { useEffect, useState } from "react"
 
 import { FaTwitch, FaTwitter } from "react-icons/fa"
+import { FetchObject } from "../../utils"
 
-interface FetchObject {
-    AboutMe: {
-        content: string[]
-    }
+interface props {
+    fetchedData: Pick<FetchObject, "AboutMe">
 }
 
-export const AboutMe = () => {
+export const AboutMe = ({ fetchedData }: props) => {
     const [isLoaded, setIsLoaded] = useState(false)
     const _scaleFadeDisclosure = useDisclosure()
 
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-    const [_fetchedData, _setFetchedData] = useState<string[]>([])
-
     useEffect(() => {
         _scaleFadeDisclosure.onToggle()
-
-        fetch(process.env.PUBLIC_URL + "/resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchObject) => {
-                _setFetchedData(data.AboutMe.content)
-                _setIsFetched(true)
-            })
     }, [])
 
     return (
@@ -68,19 +56,9 @@ export const AboutMe = () => {
                                     Hi there! I&apos;m Cookie, nice to meet ya!
                                 </Heading>
 
-                                {_isFetched ? (
-                                    <>
-                                        {_fetchedData.map((item, i) => (
-                                            <Text key={"item-" + i}>
-                                                {item}
-                                            </Text>
-                                        ))}
-                                    </>
-                                ) : (
-                                    <Skeleton>
-                                        <Box minH={60} />
-                                    </Skeleton>
-                                )}
+                                {fetchedData.AboutMe.content.map((item, i) => (
+                                    <Text key={"item-" + i}>{item}</Text>
+                                ))}
 
                                 <Text as={"i"} fontSize={"sm"}>
                                     &larr; Artwork by{" "}

@@ -18,43 +18,18 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { CustomModal, Pagination } from "../../components"
 import { CommissionDetails, Extras, PriceSheet, TOS } from "../../fragments"
+import { FetchObject } from "../../utils"
 import { usePaginationLogic } from "../../utils/usePaginationLogic"
 import { useScrollToTop } from "../../utils/useScrollToTop"
 
-interface FetchObject {
-    TOS: {
-        tos: string[]
-        importants: string[]
-    }
-    CommissionDetails: {
-        details: string[]
-        paymentProcess: string[]
-        willDraw: string[]
-        willNotDraw: string[]
-    }
-    Extras: {
-        background: string[]
-        others: string[]
-    }
-    PriceSheet: {
-        description: {
-            emotes: string[]
-            allBody: string[]
-            refSheet: string[]
-            plushPhoneBG: string[]
-        }
-    }
-
-    ImgLinks: {
-        halfBody: string[]
-        fullBody: string[]
-        emotes: string[]
-        plushPhoneBG: string[]
-        refSheet: string[]
-    }
+interface props {
+    fetchedData: Pick<
+        FetchObject,
+        "TOS" | "CommissionDetails" | "Extras" | "PriceSheet" | "ImgLinks"
+    >
 }
 
-export const Commission = () => {
+export const Commission = ({ fetchedData }: props) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { currentPage, setCurrentPage, maxPage, setMaxPage } =
         usePaginationLogic(1)
@@ -74,52 +49,8 @@ export const Commission = () => {
 
     const _transition = useDisclosure()
 
-    const [_fetchedData, _setFetchedData] = useState<FetchObject>({
-        CommissionDetails: {
-            details: [],
-            paymentProcess: [],
-            willDraw: [],
-            willNotDraw: [],
-        },
-
-        TOS: {
-            importants: [],
-            tos: [],
-        },
-
-        Extras: {
-            background: [],
-            others: [],
-        },
-
-        PriceSheet: {
-            description: {
-                emotes: [],
-                allBody: [],
-                plushPhoneBG: [],
-                refSheet: [],
-            },
-        },
-
-        ImgLinks: {
-            emotes: [],
-            fullBody: [],
-            halfBody: [],
-            plushPhoneBG: [],
-            refSheet: [],
-        },
-    })
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-
     useEffect(() => {
         _transition.onToggle()
-
-        fetch("resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchObject) => {
-                _setFetchedData(data)
-                _setIsFetched(true)
-            })
     }, [])
 
     return (
@@ -206,62 +137,58 @@ export const Commission = () => {
                 </Box>
 
                 <Box>
-                    {_isFetched && (
-                        <PriceSheet
-                            fetchedData={{
-                                ImgLinks: _fetchedData.ImgLinks,
-                                PriceSheet: _fetchedData.PriceSheet,
-                            }}
-                        />
-                    )}
+                    <PriceSheet
+                        fetchedData={{
+                            ImgLinks: fetchedData.ImgLinks,
+                            PriceSheet: fetchedData.PriceSheet,
+                        }}
+                    />
                 </Box>
             </Stack>
 
-            {_isFetched && (
-                <CustomModal
-                    isOpen={isOpen}
-                    onClose={onClose}
-                    bodyRef={_modalBodyRef}
-                    header={
-                        modalInnerComp === "tos"
-                            ? "Terms of Service"
-                            : modalInnerComp === "details"
-                            ? "Commission Details"
-                            : "Extras and Fees"
-                    }
-                    body={
-                        modalInnerComp === "tos" ? (
-                            <TOS
-                                currentPage={currentPage}
-                                setMaxPage={setMaxPage}
-                                fetchedContent={_fetchedData.TOS}
-                            />
-                        ) : modalInnerComp === "details" ? (
-                            <CommissionDetails
-                                currentPage={currentPage}
-                                setMaxPage={setMaxPage}
-                                fetchedContent={_fetchedData.CommissionDetails}
-                            />
-                        ) : (
-                            <Extras
-                                setMaxPage={setMaxPage}
-                                fetchedContent={_fetchedData.Extras}
-                            />
-                        )
-                    }
-                    footer={
-                        <Center flexGrow={1}>
-                            <Pagination
-                                maxPage={maxPage}
-                                currentPage={currentPage}
-                                setPageCallback={setCurrentPage}
-                                onNext={_scrollToTop}
-                                onPrevious={_scrollToTop}
-                            />
-                        </Center>
-                    }
-                />
-            )}
+            <CustomModal
+                isOpen={isOpen}
+                onClose={onClose}
+                bodyRef={_modalBodyRef}
+                header={
+                    modalInnerComp === "tos"
+                        ? "Terms of Service"
+                        : modalInnerComp === "details"
+                        ? "Commission Details"
+                        : "Extras and Fees"
+                }
+                body={
+                    modalInnerComp === "tos" ? (
+                        <TOS
+                            currentPage={currentPage}
+                            setMaxPage={setMaxPage}
+                            fetchedContent={fetchedData.TOS}
+                        />
+                    ) : modalInnerComp === "details" ? (
+                        <CommissionDetails
+                            currentPage={currentPage}
+                            setMaxPage={setMaxPage}
+                            fetchedContent={fetchedData.CommissionDetails}
+                        />
+                    ) : (
+                        <Extras
+                            setMaxPage={setMaxPage}
+                            fetchedContent={fetchedData.Extras}
+                        />
+                    )
+                }
+                footer={
+                    <Center flexGrow={1}>
+                        <Pagination
+                            maxPage={maxPage}
+                            currentPage={currentPage}
+                            setPageCallback={setCurrentPage}
+                            onNext={_scrollToTop}
+                            onPrevious={_scrollToTop}
+                        />
+                    </Center>
+                }
+            />
         </ScaleFade>
     )
 }
