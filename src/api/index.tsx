@@ -1,15 +1,15 @@
-import axios, { AxiosError } from "axios"
+import axios from "axios"
 
-const DEV_URL = process.env.REACT_APP_DEV_API_URL
+const API_URL = process.env.REACT_APP_API_URL
 
 export function testAPI() {
-    return axios.get(`${DEV_URL}`).then((res) => {
+    return axios.get(`${API_URL}`).then((res) => {
         console.log(res)
     })
 }
 
 export function testSend(form: any) {
-    return axios.post(`${DEV_URL}/test-send`, form)
+    return axios.post(`${API_URL}/test-send`, form)
 }
 
 export async function sendRequestForm(
@@ -18,14 +18,14 @@ export async function sendRequestForm(
     setStatus?: (status: string) => void
 ) {
     return await axios
-        .post(`${DEV_URL}/api/request`, {
+        .post(`${API_URL}/api/request`, {
             form: form,
             CAPTCHAToken: CAPTCHAToken,
         })
-        .then((res) => {
+        .then(() => {
             setStatus?.("OK")
         })
-        .catch((error: AxiosError | Error) => {
+        .catch(() => {
             setStatus?.("Error")
         })
 }
