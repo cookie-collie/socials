@@ -1,15 +1,14 @@
 import {
     AspectRatio,
-    Button,
+    Box,
     Card,
     CardBody,
     CardHeader,
     CardProps,
-    Flex,
+    Divider,
     Heading,
     Image,
     Img,
-    Link,
     Modal,
     ModalCloseButton,
     ModalContent,
@@ -45,19 +44,6 @@ export const CustomCard = (props: CustomCardProps) => {
         variant,
     } = props
 
-    const _coverImgVariants = {
-        hover: {
-            // scale: 1.05,
-        },
-    }
-
-    const _innerButtonsVariants = {
-        hover: {
-            opacity: 1,
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-        },
-    }
-
     const [selectedCardContent, setSelectedCardContent] = useState("")
 
     return (
@@ -67,72 +53,38 @@ export const CustomCard = (props: CustomCardProps) => {
                 variant={variant}
                 color={"blackAlpha.700"}
             >
-                <motion.div whileHover={"hover"} variants={_coverImgVariants}>
-                    <AspectRatio maxH={"200px"}>
-                        <>
-                            <motion.div
-                                variants={_innerButtonsVariants}
-                                initial={{ opacity: 0 }}
-                                style={{
-                                    position: "absolute",
-                                    zIndex: 1,
-                                    width: "100%",
-                                    height: "100%",
-                                }}
+                <AspectRatio maxH={"200px"}>
+                    <motion.div
+                        layoutId={id}
+                        onClick={() => setSelectedCardContent(id)}
+                    >
+                        <Img src={coverImgUrl} cursor={"pointer"}/>
+                    </motion.div>
+                </AspectRatio>
+
+                <Box px={5}>
+                    <CardHeader px={0}>
+                        <Stack gap={2}>
+                            <Heading
+                                fontFamily={"Fredoka, Comfortaa, Arial"}
+                                size={"lg"}
+                                color={"blackAlpha.800"}
+                                textAlign={"center"}
                             >
-                                <Flex align={"center"} h={"100%"}>
-                                    <Stack direction={"column"}>
-                                        <Button
-                                            variant={"solid"}
-                                            colorScheme="pink"
-                                            onClick={() =>
-                                                setSelectedCardContent(id)
-                                            }
-                                        >
-                                            Expand
-                                        </Button>
+                                {heading}
+                            </Heading>
 
-                                        <Button
-                                            variant={"solid"}
-                                            colorScheme="pink"
-                                            as={Link}
-                                            href={linkTo}
-                                            style={{ textDecoration: "none" }}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            More Examples
-                                        </Button>
-                                    </Stack>
-                                </Flex>
-                            </motion.div>
+                            <Stat textAlign={"center"} color={"blackAlpha.800"}>
+                                <StatNumber>{price}</StatNumber>
+                                <StatHelpText>{additionalInfo}</StatHelpText>
+                            </Stat>
+                        </Stack>
+                    </CardHeader>
 
-                            <motion.div layoutId={id}>
-                                <Img src={coverImgUrl} />
-                            </motion.div>
-                        </>
-                    </AspectRatio>
-                </motion.div>
+                    <Divider />
 
-                <CardHeader>
-                    <Stack gap={3}>
-                        <Heading
-                            fontFamily={"Fredoka, Comfortaa, Arial"}
-                            size={"lg"}
-                            color={"blackAlpha.800"}
-                            textAlign={"center"}
-                        >
-                            {heading}
-                        </Heading>
-
-                        <Stat textAlign={"center"} color={"blackAlpha.800"}>
-                            <StatNumber>{price}</StatNumber>
-                            <StatHelpText>{additionalInfo}</StatHelpText>
-                        </Stat>
-                    </Stack>
-                </CardHeader>
-
-                <CardBody>{body}</CardBody>
+                    <CardBody px={0}>{body}</CardBody>
+                </Box>
             </Card>
 
             <AnimatePresence>
@@ -140,6 +92,7 @@ export const CustomCard = (props: CustomCardProps) => {
                     isOpen={selectedCardContent ? true : false}
                     onClose={() => setSelectedCardContent("")}
                     size={"3xl"}
+                    isCentered
                 >
                     <ModalOverlay />
                     <ModalContent>

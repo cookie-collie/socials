@@ -4,13 +4,11 @@ import {
     AccordionIcon,
     AccordionItem,
     AccordionPanel,
-    Flex,
-    Icon,
+    Heading,
     Link,
     List,
     ListIcon,
     ListItem,
-    Text,
 } from "@chakra-ui/react"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { MdCookie } from "react-icons/md"
@@ -31,14 +29,15 @@ export const AboutWebsite = ({ fetchedData }: props) => {
         <Accordion allowToggle color={"blackAlpha.700"} fontSize={"lg"}>
             <AccordionItem>
                 <AccordionButton>
-                    <Text
-                        as={"b"}
+                    <Heading
                         flexGrow={1}
                         textAlign={"start"}
                         color={"blackAlpha.800"}
+                        fontFamily={"Fredoka, Comfortaa, Arial"}
+                        size={"md"}
                     >
                         What I used to build
-                    </Text>
+                    </Heading>
                     <AccordionIcon />
                 </AccordionButton>
 
@@ -58,14 +57,15 @@ export const AboutWebsite = ({ fetchedData }: props) => {
 
             <AccordionItem>
                 <AccordionButton>
-                    <Text
-                        as={"b"}
+                    <Heading
                         flexGrow={1}
                         textAlign={"start"}
                         color={"blackAlpha.800"}
+                        fontFamily={"Fredoka, Comfortaa, Arial"}
+                        size={"md"}
                     >
                         References
-                    </Text>
+                    </Heading>
                     <AccordionIcon />
                 </AccordionButton>
 
@@ -95,29 +95,36 @@ export const AboutWebsite = ({ fetchedData }: props) => {
 
             <AccordionItem>
                 <AccordionButton>
-                    <Text
-                        as={"b"}
+                    <Heading
                         flexGrow={1}
                         textAlign={"start"}
                         color={"blackAlpha.800"}
+                        fontFamily={"Fredoka, Comfortaa, Arial"}
+                        size={"md"}
                     >
                         Source code
-                    </Text>
+                    </Heading>
                     <AccordionIcon />
                 </AccordionButton>
 
                 <AccordionPanel>
-                    <Flex
-                        align={"center"}
-                        as={Link}
-                        href="https://github.com/cookie-collie/socials"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        gap={2}
-                    >
-                        <Text as={"span"}>cookie-collie/socials</Text>
-                        <Icon as={FaExternalLinkAlt} boxSize={3} />
-                    </Flex>
+                    <List>
+                        <ListItem>
+                            <Link
+                                href={
+                                    "https://github.com/cookie-collie/socials"
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                cookie-collie/socials
+                            </Link>
+                            &nbsp;
+                            <ListIcon>
+                                <FaExternalLinkAlt />
+                            </ListIcon>
+                        </ListItem>
+                    </List>
                 </AccordionPanel>
             </AccordionItem>
         </Accordion>

@@ -214,6 +214,7 @@ export const RequestForm = ({
                                     reCAPTCHARef.current?.getValue()
                                 )
                             }
+                            theme="light"
                         />
 
                         <Tooltip
