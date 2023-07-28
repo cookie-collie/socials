@@ -12,12 +12,11 @@ import {
     ListItem,
     Text,
 } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { MdCookie } from "react-icons/md"
 
-interface FetchedObject {
-    AboutWebsite: {
+interface props {
+    fetchedData: {
         items: string[]
         references: {
             href: string
@@ -27,30 +26,7 @@ interface FetchedObject {
     }
 }
 
-export const AboutWebsite = () => {
-    const [_fetchedData, _setFetchedData] = useState<FetchedObject>({
-        AboutWebsite: {
-            items: [],
-            references: [
-                {
-                    href: "",
-                    key: "",
-                    title: "",
-                },
-            ],
-        },
-    })
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-
-    useEffect(() => {
-        fetch("resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchedObject) => {
-                _setFetchedData(data)
-                _setIsFetched(true)
-            })
-    }, [])
-
+export const AboutWebsite = ({ fetchedData }: props) => {
     return (
         <Accordion allowToggle color={"blackAlpha.700"} fontSize={"lg"}>
             <AccordionItem>
@@ -68,20 +44,14 @@ export const AboutWebsite = () => {
 
                 <AccordionPanel>
                     <List>
-                        {_isFetched && (
-                            <>
-                                {_fetchedData.AboutWebsite.items.map(
-                                    (item, i) => (
-                                        <ListItem key={"item-" + i}>
-                                            <ListIcon>
-                                                <MdCookie />
-                                            </ListIcon>
-                                            {item}
-                                        </ListItem>
-                                    )
-                                )}
-                            </>
-                        )}
+                        {fetchedData.items.map((item, i) => (
+                            <ListItem key={"item-" + i}>
+                                <ListIcon>
+                                    <MdCookie />
+                                </ListIcon>
+                                {item}
+                            </ListItem>
+                        ))}
                     </List>
                 </AccordionPanel>
             </AccordionItem>
@@ -101,30 +71,24 @@ export const AboutWebsite = () => {
 
                 <AccordionPanel>
                     <List>
-                        {_isFetched && (
-                            <>
-                                {_fetchedData.AboutWebsite.references.map(
-                                    (item) => (
-                                        <ListItem key={item.key}>
-                                            <ListIcon>
-                                                <MdCookie />
-                                            </ListIcon>
-                                            <Link
-                                                href={item.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {item.title}
-                                            </Link>
-                                            &nbsp;
-                                            <ListIcon>
-                                                <FaExternalLinkAlt />
-                                            </ListIcon>
-                                        </ListItem>
-                                    )
-                                )}
-                            </>
-                        )}
+                        {fetchedData.references.map((item) => (
+                            <ListItem key={item.key}>
+                                <ListIcon>
+                                    <MdCookie />
+                                </ListIcon>
+                                <Link
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {item.title}
+                                </Link>
+                                &nbsp;
+                                <ListIcon>
+                                    <FaExternalLinkAlt />
+                                </ListIcon>
+                            </ListItem>
+                        ))}
                     </List>
                 </AccordionPanel>
             </AccordionItem>

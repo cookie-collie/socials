@@ -16,17 +16,13 @@ import {
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { CustomAlert, FormGuide, RequestForm } from "../../fragments"
+import { FetchObject } from "../../utils"
 
-interface FetchObject {
-    FormGuide: {
-        guidelines: {
-            field: string
-            content: string
-        }[]
-    }
+interface props {
+    fetchedData: Pick<FetchObject, "FormGuide">
 }
 
-export const CommissionForm = () => {
+export const CommissionForm = ({ fetchedData }: props) => {
     const _info = [
         "Ready to have a drawing made by me? Go ahead and fill out the form below!",
 
@@ -44,20 +40,8 @@ export const CommissionForm = () => {
 
     const _transition = useDisclosure()
 
-    const [_isFetched, _setIsFetched] = useState<boolean>(false)
-    const [_fetchedData, _setFetchedData] = useState<FetchObject>({
-        FormGuide: { guidelines: [{ field: "", content: "" }] },
-    })
-
     useEffect(() => {
         _transition.onToggle()
-
-        fetch("resources/jsons/texts.json")
-            .then((res) => res.json())
-            .then((data: FetchObject) => {
-                _setFetchedData(data)
-                _setIsFetched(true)
-            })
     }, [])
 
     const _handleCloseAlert = () => {
@@ -129,7 +113,7 @@ export const CommissionForm = () => {
             <FormGuide
                 isOpen={_formGuideDisclosure.isOpen}
                 onClose={_formGuideDisclosure.onClose}
-                fetchedContent={_fetchedData.FormGuide}
+                fetchedContent={fetchedData.FormGuide}
             />
 
             <CustomAlert
