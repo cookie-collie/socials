@@ -99,7 +99,7 @@ export const PriceSheet = ({ fetchedData }: FetchObject) => {
 
     return (
         <SimpleGrid
-            columns={{ base: 1, sm: 2, md: 3 }}
+            columns={{ base: 1, sm: 2, lg: 3 }}
             gap={8}
             color={"blackAlpha.700"}
             fontSize={"lg"}

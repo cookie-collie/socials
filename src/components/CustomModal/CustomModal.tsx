@@ -23,7 +23,7 @@ type CustomModalProps = Omit<
 export const CustomModal = (props: CustomModalProps) => {
     const { header, body, footer, bodyRef } = props
     return (
-        <Modal {...props} scrollBehavior="inside" size={"3xl"}>
+        <Modal {...props} scrollBehavior="inside" size={"3xl"} isCentered>
             <ModalOverlay />
 
             <ModalContent

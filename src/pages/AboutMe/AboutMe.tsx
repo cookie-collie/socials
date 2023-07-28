@@ -60,8 +60,12 @@ export const AboutMe = ({ fetchedData }: props) => {
                                     <Text key={"item-" + i}>{item}</Text>
                                 ))}
 
-                                <Text as={"i"} fontSize={"sm"}>
-                                    &larr; Artwork by{" "}
+                                <Text
+                                    as={"i"}
+                                    fontSize={"sm"}
+                                    order={{ base: -1, md: 1 }}
+                                >
+                                    Artwork by{" "}
                                     <Link
                                         href="https://twitter.com/InformalScout"
                                         target="_blank"

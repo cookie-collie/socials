@@ -4,7 +4,7 @@
             "React with Typescript template",
             "Chakra UI component library",
             "react-icons for icons",
-            "Github Page for hosting"
+            "Vercel for hosting"
         ],
 
         "references": [
@@ -24,19 +24,13 @@
                 "href": "https://react-icons.github.io/react-icons/",
                 "title": "React Icons Main Page",
                 "key": "react-icons"
-            },
-
-            {
-                "href": "https://github.com/gitname/react-gh-pages",
-                "title": "Deploy React App to GitHub Pages Tutorial",
-                "key": "github-page"
             }
         ]
     },
 
     "CommissionDetails": {
         "details": [
-            "Please include your contacts (Discord, Twitter, ...) when commissioning me.",
+            "Please include your contacts (Discord, Twitter,...) when commissioning me.",
 
             "A proper reference or visual representation of your character must be provided.",
 
@@ -50,11 +44,11 @@
 
             "You may ask for the progress of the commission, but please be reasonable about the frequency.",
 
-            "After I send you the completed artwork, please make sure to check for any errors and details before confirming the final approval. Keep in mind that any errors made by me (e.g. Forget to color a part, patterns on the wrong side, missing accessories, …) are not charged any fees."
+            "After I send you the completed artwork, please make sure to check for any errors and details before confirming the final approval. Keep in mind that any errors made by me (e.g. Forget to color a part, patterns on the wrong side, missing accessories,...) are not charged any fees."
         ],
 
         "paymentProcess": [
-            "I accept payments via either Ko-fi or PayPal, preferably Ko-fi. For half body and full body commissions, please wait for the finalized price given by me before proceeding with any payment.",
+            "I accept payments via either Ko-fi only. For half body and full body commissions, please wait for the finalized price given by me before proceeding with any payment.",
 
             "Payment must be paid in full before I start working on the commission.",
 
@@ -65,7 +59,6 @@
 
         "willNotDraw": [
             "NSFW",
-            "Overly complex characters",
             "Human",
             "Realistic",
             "Gore",
@@ -73,8 +66,9 @@
             "Fetishes",
             "Muscles",
             "Religions",
-            "Licensed character",
             "Self-harm",
+            "Licensed character",
+            "Overly complex characters",
             "Any hateful content towards anyone or community"
         ]
     },
@@ -85,8 +79,8 @@
     },
 
     "Extras": {
-        "background": ["Simple background: $0", "Detailed background: 5$"],
-        "others": ["Change request after approval: $5"]
+        "background": ["Simple background: $0", "Detailed background: $5"],
+        "others": ["Edit request after approval: $5/request"]
     },
 
     "FormGuide": {
@@ -113,7 +107,7 @@
 
             {
                 "field": "Secret commission?: ",
-                "content": "Mark your commission as a secret one or not, based on the selection. Secret commission will only be sent to you when it is finished."
+                "content": "Mark your commission as a secret one or not. Secret commission will only be sent to you when it is finished."
             },
 
             {
@@ -131,9 +125,10 @@
     "PriceSheet": {
         "description": {
             "emotes": [
-                "Simple shaded point emote",
+                "Simple shaded emotes",
                 "Finished emote will be 1024px x 1024px",
-                "Twitch resizable"
+                "Twitch resizable",
+                "Ideas must be provided beforehand"
             ],
 
             "allBody": [
@@ -144,12 +139,14 @@
             "refSheet": [
                 "Basic reference sheet with back and front designs",
                 "Color palette included",
-                "No shading because of the nature of reference sheet"
+                "No shading because of the nature of reference sheet",
+                "Character designs must be provided beforehand"
             ],
 
             "plushPhoneBG": [
                 "Fully shaded drawing",
-                "High-res result, matches with the phone resolution"
+                "High-res result, matches with the phone resolution",
+                "Phone resolution (width and height) must be provided beforehand, in pixels by pixels"
             ]
         }
     },
@@ -194,7 +191,7 @@
         "tos": [
             "Details about commissions will be available on my Ko-fi. Please read them carefully before commissioning.",
 
-            "All of my finished artworks will be delivered exclusively in digital format, via either Ko-fi Direct Message, Twitter Direct Message, Discord, or email.",
+            "All of my finished artworks will be delivered exclusively in digital format, via either Discord, or email.",
 
             "I do not have the right to reserve the finished commissions forever. It is the duty of the commissioner to save and reserve the artworks.",
 
@@ -244,7 +241,7 @@
         "content": [
             "Commissions are open with unlimited slots until further notice.",
 
-            "Please refer thoroughly through the TOS and the process before commissioning me."
+            "Please refer through the TOS and the process carefully before commissioning me."
         ]
     },
 

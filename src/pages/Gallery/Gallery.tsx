@@ -1,13 +1,17 @@
 import {
+    Button,
     Card,
     CardBody,
     Divider,
+    Flex,
     Heading,
+    Link,
     ScaleFade,
     Stack,
     useDisclosure,
 } from "@chakra-ui/react"
 import { useEffect } from "react"
+import { FaExternalLinkAlt } from "react-icons/fa"
 import { FetchObject } from "../../utils"
 import { EmotesFragment } from "./EmotesFragment"
 import { FullBodyFragment } from "./FullBodyFragment"
@@ -28,7 +32,13 @@ export const Gallery = ({ fetchedData }: props) => {
 
     return (
         <ScaleFade in={_transition.isOpen} delay={0.3}>
-            <Card variant={"outline"} px={{ sm: 8, md: 16 }} py={10} minH={96}>
+            <Card
+                variant={"outline"}
+                px={{ sm: 8, md: 16 }}
+                py={10}
+                color={"blackAlpha.700"}
+                fontSize={"xl"}
+            >
                 <CardBody>
                     <Stack gap={8}>
                         <Heading
@@ -39,6 +49,20 @@ export const Gallery = ({ fetchedData }: props) => {
                         >
                             Gallery
                         </Heading>
+
+                        <Flex alignSelf={"center"}>
+                            <Button
+                                variant={"link"}
+                                colorScheme="pink"
+                                as={Link}
+                                href="https://itaku.ee/profile/cookiecollie/gallery"
+                                rel="noreferrer noopener"
+                                target="_blank"
+                                rightIcon={<FaExternalLinkAlt />}
+                            >
+                                See more at my Itaku
+                            </Button>
+                        </Flex>
 
                         <Divider />
 

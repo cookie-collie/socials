@@ -9,6 +9,7 @@ import {
     DrawerHeader,
     DrawerOverlay,
     Flex,
+    Heading,
     Icon,
     Stack,
     Text,
@@ -115,14 +116,22 @@ export const MainLayout = () => {
                             p={2}
                             fontFamily={"Fredoka, Comfortaa, Arial"}
                         >
-                            <DrawerHeader fontSize={"2xl"}>
-                                About this Website
+                            <DrawerHeader>
+                                <Heading
+                                    fontFamily={"Fredoka, Comfortaa, Arial"}
+                                    size={"lg"}
+                                    color={"blackAlpha.800"}
+                                >
+                                    About this website
+                                </Heading>
                             </DrawerHeader>
+
                             <DrawerBody>
                                 <AboutWebsite
                                     fetchedData={_fetchedData.AboutWebsite}
                                 />
                             </DrawerBody>
+                            
                             <DrawerFooter>
                                 <Button onClick={_drawerDisclosure.onClose}>
                                     Close
