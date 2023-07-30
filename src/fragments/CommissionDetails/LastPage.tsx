@@ -1,13 +1,13 @@
 import { Heading, List, ListItem, Stack } from "@chakra-ui/react"
 
 interface props {
-    fetchedContent: {
+    fetchedData: {
         willDraw: string[]
         willNotDraw: string[]
     }
 }
 
-export const LastPage = ({ fetchedContent }: props) => {
+export const LastPage = ({ fetchedData }: props) => {
     return (
         <>
             <Stack textAlign={"center"} gap={4}>
@@ -20,7 +20,7 @@ export const LastPage = ({ fetchedContent }: props) => {
                 </Heading>
 
                 <List spacing={2}>
-                    {fetchedContent.willDraw.map((item, i) => (
+                    {fetchedData.willDraw.map((item, i) => (
                         <ListItem key={"item-" + i}>{item}</ListItem>
                     ))}
                 </List>
@@ -34,7 +34,7 @@ export const LastPage = ({ fetchedContent }: props) => {
                 </Heading>
 
                 <List spacing={2}>
-                    {fetchedContent.willNotDraw.map((item, i) => (
+                    {fetchedData.willNotDraw.map((item, i) => (
                         <ListItem key={"item-" + i}>{item}</ListItem>
                     ))}
                 </List>

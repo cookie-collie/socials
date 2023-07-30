@@ -123,31 +123,54 @@
     },
 
     "PriceSheet": {
-        "description": {
-            "emotes": [
+        "emotes": {
+            "description": [
                 "Simple shaded emotes",
                 "Finished emote will be 1024px x 1024px",
                 "Twitch resizable",
-                "Ideas must be provided beforehand"
+                "Emote ideas must be provided beforehand"
             ],
 
-            "allBody": [
+            "price": "$10"
+        },
+
+        "halfBody": {
+            "description": [
                 "Fully shaded drawing",
                 "High-res drawing (at least 2048px x 2048px)"
             ],
 
-            "refSheet": [
+            "price": "$25+"
+        },
+
+        "fullBody": {
+            "description": [
+                "Fully shaded drawing",
+                "High-res drawing (at least 2048px x 2048px)"
+            ],
+
+            "price": "$35+"
+        },
+
+        "refSheet": {
+            "description": [
                 "Basic reference sheet with back and front designs",
                 "Color palette included",
                 "No shading because of the nature of reference sheet",
                 "Character designs must be provided beforehand"
             ],
 
-            "plushPhoneBG": [
+            "price": "$50"
+        },
+
+        "plushPhoneBG": {
+            "description": [
                 "Fully shaded drawing",
                 "High-res result, matches with the phone resolution",
                 "Phone resolution (width and height) must be provided beforehand, in pixels by pixels"
-            ]
+            ],
+
+            "price": "$25"
         }
     },
 

@@ -24,11 +24,29 @@ export interface FetchObject {
         }[]
     }
     PriceSheet: {
-        description: {
-            emotes: string[]
-            allBody: string[]
-            refSheet: string[]
-            plushPhoneBG: string[]
+        emotes: {
+            description: string[]
+            price: string
+        }
+
+        halfBody: {
+            description: string[]
+            price: string
+        }
+
+        fullBody: {
+            description: string[]
+            price: string
+        }
+
+        refSheet: {
+            description: string[]
+            price: string
+        }
+
+        plushPhoneBG: {
+            description: string[]
+            price: string
         }
     }
     ImgLinks: {

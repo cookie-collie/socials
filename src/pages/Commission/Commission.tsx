@@ -162,18 +162,18 @@ export const Commission = ({ fetchedData }: props) => {
                         <TOS
                             currentPage={currentPage}
                             setMaxPage={setMaxPage}
-                            fetchedContent={fetchedData.TOS}
+                            fetchedData={fetchedData}
                         />
                     ) : modalInnerComp === "details" ? (
                         <CommissionDetails
                             currentPage={currentPage}
                             setMaxPage={setMaxPage}
-                            fetchedContent={fetchedData.CommissionDetails}
+                            fetchedData={fetchedData}
                         />
                     ) : (
                         <Extras
                             setMaxPage={setMaxPage}
-                            fetchedContent={fetchedData.Extras}
+                            fetchedData={fetchedData}
                         />
                     )
                 }
