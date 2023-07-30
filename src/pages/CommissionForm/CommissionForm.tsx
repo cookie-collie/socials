@@ -113,7 +113,7 @@ export const CommissionForm = ({ fetchedData }: props) => {
             <FormGuide
                 isOpen={_formGuideDisclosure.isOpen}
                 onClose={_formGuideDisclosure.onClose}
-                fetchedContent={fetchedData.FormGuide}
+                fetchedData={fetchedData}
             />
 
             <CustomAlert

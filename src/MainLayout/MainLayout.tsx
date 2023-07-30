@@ -73,11 +73,25 @@ export const MainLayout = () => {
             refSheet: [],
         },
         PriceSheet: {
-            description: {
-                allBody: [],
-                emotes: [],
-                plushPhoneBG: [],
-                refSheet: [],
+            emotes: {
+                description: [],
+                price: "",
+            },
+            halfBody: {
+                description: [],
+                price: "",
+            },
+            fullBody: {
+                description: [],
+                price: "",
+            },
+            refSheet: {
+                description: [],
+                price: "",
+            },
+            plushPhoneBG: {
+                description: [],
+                price: "",
             },
         },
         TOS: {
@@ -128,10 +142,10 @@ export const MainLayout = () => {
 
                             <DrawerBody>
                                 <AboutWebsite
-                                    fetchedData={_fetchedData.AboutWebsite}
+                                    fetchedData={_fetchedData}
                                 />
                             </DrawerBody>
-                            
+
                             <DrawerFooter>
                                 <Button onClick={_drawerDisclosure.onClose}>
                                     Close

@@ -2,14 +2,14 @@ import { List, ListIcon, ListItem } from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
 
 interface props {
-    fetchedContent: string[]
+    fetchedData: string[]
 }
 
-export const FirstTwoPage = ({ fetchedContent }: props) => {
+export const FirstTwoPage = ({ fetchedData }: props) => {
     return (
         <>
             <List spacing={4}>
-                {fetchedContent.map((item, i) => (
+                {fetchedData.map((item, i) => (
                     <ListItem key={"comm-details-" + i}>
                         <ListIcon>
                             <MdCookie />

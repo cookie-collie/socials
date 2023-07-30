@@ -12,16 +12,10 @@ import {
 } from "@chakra-ui/react"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { MdCookie } from "react-icons/md"
+import { FetchObject } from "../../utils"
 
 interface props {
-    fetchedData: {
-        items: string[]
-        references: {
-            href: string
-            title: string
-            key: string
-        }[]
-    }
+    fetchedData: Pick<FetchObject, "AboutWebsite">
 }
 
 export const AboutWebsite = ({ fetchedData }: props) => {
@@ -43,7 +37,7 @@ export const AboutWebsite = ({ fetchedData }: props) => {
 
                 <AccordionPanel>
                     <List>
-                        {fetchedData.items.map((item, i) => (
+                        {fetchedData.AboutWebsite.items.map((item, i) => (
                             <ListItem key={"item-" + i}>
                                 <ListIcon>
                                     <MdCookie />
@@ -71,7 +65,7 @@ export const AboutWebsite = ({ fetchedData }: props) => {
 
                 <AccordionPanel>
                     <List>
-                        {fetchedData.references.map((item) => (
+                        {fetchedData.AboutWebsite.references.map((item) => (
                             <ListItem key={item.key}>
                                 <ListIcon>
                                     <MdCookie />

@@ -8,19 +8,15 @@ import {
 } from "@chakra-ui/react"
 import { MdCookie } from "react-icons/md"
 import { CustomModal } from "../../components"
+import { FetchObject } from "../../utils"
 
-interface FetchObject {
-    fetchedContent: {
-        guidelines: {
-            field: string
-            content: string
-        }[]
-    }
+interface ModifiedFetchObject {
+    fetchedData: Pick<FetchObject, "FormGuide">
 }
 
-type props = Omit<FetchObject & ModalProps, "children">
+type props = Omit<ModifiedFetchObject & ModalProps, "children">
 
-export const FormGuide = ({ fetchedContent, isOpen, onClose }: props) => {
+export const FormGuide = ({ fetchedData, isOpen, onClose }: props) => {
     return (
         <CustomModal
             isOpen={isOpen}
@@ -39,7 +35,7 @@ export const FormGuide = ({ fetchedContent, isOpen, onClose }: props) => {
                     </Heading>
 
                     <List spacing={4}>
-                        {fetchedContent.guidelines.map((item, i) => (
+                        {fetchedData.FormGuide.guidelines.map((item, i) => (
                             <ListItem key={"item-" + i}>
                                 <ListIcon>
                                     <MdCookie />

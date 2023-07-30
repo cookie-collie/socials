@@ -1,15 +1,16 @@
 import { Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { MdCookie } from "react-icons/md"
+import { FetchObject } from "../../utils"
 
 interface TOSProps {
     currentPage?: number
     setMaxPage?: (page: number) => void
-    fetchedContent: { importants: string[]; tos: string[] }
+    fetchedData: Pick<FetchObject, "TOS">
 }
 
 export const TOS = (props: TOSProps) => {
-    const { currentPage = 1, setMaxPage, fetchedContent } = props
+    const { currentPage = 1, setMaxPage, fetchedData } = props
 
     useEffect(() => {
         setMaxPage?.(2)
@@ -41,7 +42,7 @@ export const TOS = (props: TOSProps) => {
             <List spacing={4}>
                 {currentPage === 1 ? (
                     <>
-                        {fetchedContent.tos.map((item, i) => (
+                        {fetchedData.TOS.tos.map((item, i) => (
                             <ListItem key={"tos-" + i}>
                                 <ListIcon>
                                     <MdCookie />
@@ -52,7 +53,7 @@ export const TOS = (props: TOSProps) => {
                     </>
                 ) : (
                     <>
-                        {fetchedContent.importants.map((item, i) => (
+                        {fetchedData.TOS.importants.map((item, i) => (
                             <ListItem key={"importants-" + i}>
                                 <ListIcon>
                                     <MdCookie />

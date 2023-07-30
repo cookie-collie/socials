@@ -9,16 +9,14 @@ import {
     Text,
 } from "@chakra-ui/react"
 import { useEffect } from "react"
+import { FetchObject } from "../../utils"
 
 interface ExtrasProps {
     setMaxPage?: (page: number) => void
-    fetchedContent: {
-        background: string[]
-        others: string[]
-    }
+    fetchedData: Pick<FetchObject, "Extras">
 }
 
-export const Extras = ({ setMaxPage, fetchedContent }: ExtrasProps) => {
+export const Extras = ({ setMaxPage, fetchedData }: ExtrasProps) => {
     useEffect(() => {
         setMaxPage?.(1)
     }, [])
@@ -38,7 +36,7 @@ export const Extras = ({ setMaxPage, fetchedContent }: ExtrasProps) => {
 
                 <AccordionPanel>
                     <List>
-                        {fetchedContent.background.map((item, i) => (
+                        {fetchedData.Extras.background.map((item, i) => (
                             <ListItem key={"bg-item-" + i}>
                                 <Text>{item}</Text>
                             </ListItem>
@@ -55,7 +53,7 @@ export const Extras = ({ setMaxPage, fetchedContent }: ExtrasProps) => {
 
                 <AccordionPanel>
                     <List>
-                        {fetchedContent.others.map((item, i) => (
+                        {fetchedData.Extras.others.map((item, i) => (
                             <ListItem key={"bg-item-" + i}>
                                 <Text>{item}</Text>
                             </ListItem>
