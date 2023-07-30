@@ -1,5 +1,7 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
+
 import { BrowserRouter } from "react-router-dom"
+
 import { MainLayout } from "./MainLayout"
 
 function App() {
@@ -61,11 +63,13 @@ function App() {
     })
 
     return (
+
         <BrowserRouter basename="/">
             <ChakraProvider>
                 <MainLayout />
             </ChakraProvider>
         </BrowserRouter>
+
     )
 }
 
