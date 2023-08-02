@@ -74,6 +74,7 @@ export const RequestForm = ({
 
     const reCAPTCHARef = useRef<ReCAPTCHA>(null)
 
+    const reCAPTCHASiteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY?.replace(/["]+/g, "")
     return (
         <form onSubmit={_handleSubmit}>
             <Stack gap={6}>
@@ -207,7 +208,7 @@ export const RequestForm = ({
                 <Flex justify={"center"}>
                     <Stack gap={6}>
                         <ReCAPTCHA
-                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
+                            sitekey={reCAPTCHASiteKey!}
                             ref={reCAPTCHARef}
                             onChange={() =>
                                 _CAPTCHAToken.setValue(
